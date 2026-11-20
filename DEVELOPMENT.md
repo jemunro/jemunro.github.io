@@ -24,3 +24,32 @@ Search, keyword filters and sorting are done by `_extensions/profile/catalogue.j
 
 ## Don't render while previewing
 `quarto preview` re-renders automatically on save. Running `quarto render` at the same time writes to the same `_site/` and can make the preview error or 404. To check a clean build while the preview is running, render to a separate folder inside the project (git-ignored): `quarto render --output-dir _check`, then delete `_check/`. (An output directory outside the project triggers Quarto warnings.)
+
+## Deployment (GitHub Pages)
+The site is built and published by [`.github/workflows/pages.yml`](.github/workflows/pages.yml). Rendered HTML is never committed; `_site/` stays git-ignored and exists only inside the workflow.
+
+| Event | Build + validate | Deploy |
+|---|---|---|
+| Pull request (any branch) | yes | **no** |
+| Push to a feature branch (no PR) | no workflow runs | no |
+| Push / merge to `main` | yes | yes, only if the build passed |
+| Manual run (Actions → Run workflow) | yes | only when run on `main` |
+
+The `build` job installs Quarto (version pinned by `QUARTO_VERSION` in the workflow; keep it equal to the Codespaces version, `quarto --version`), runs `quarto render`, then `quarto run .github/scripts/check-site.ts _site`, which fails the job if an expected page or asset is missing, an internal link/asset/fragment does not resolve, or a catalogue page has no entries or lacks its search script. The `deploy` job `needs: build`, so a failed render or validation means nothing is published and the live site keeps its previous version.
+
+### One-time setup (repository owner, manual)
+1. Repository → **Settings → Pages → Build and deployment → Source: GitHub Actions** (not "Deploy from a branch").
+2. GitHub Pages for a *private* repository requires a paid GitHub plan; on a free plan the repository must be public. Do this only when ready to publish.
+3. The repository must be named `<username>.github.io`, so the site is served at `https://<username>.github.io/` (site root; no base-path configuration needed).
+4. Optional: **Settings → Environments → github-pages** already restricts deployments to `main`; leave that as is. Optionally protect `main` and require the *Build and deploy site / build* check on pull requests.
+5. Until step 1 is done the `deploy` job on `main` fails at `configure-pages` ("Pages not enabled"); the build job and pull-request checks are unaffected.
+
+### Day-to-day
+Work on a feature branch, preview privately in Codespaces (above), open a pull request (the **build** check runs; nothing is published), merge to `main` → the site updates within a minute or two. Deployment history: repository **Actions** tab and **Settings → Environments → github-pages**.
+
+### Diagnosing a failed run
+Open the run in the **Actions** tab and find the failing step:
+- **Render site** – a Quarto/Lua error (e.g. invalid front matter in `content/`, naming the file). Reproduce locally with `quarto render --output-dir _check`, then delete `_check/`.
+- **Validate site** – the log lists each problem (missing file, unresolved link). Reproduce locally: `quarto render --output-dir _check && quarto run .github/scripts/check-site.ts _check`.
+- **configure-pages / deploy-pages** – almost always Pages not enabled or the source not set to *GitHub Actions* (setup step 1), or a deployment from a branch other than `main`.
+- Rendering works locally but not in CI – compare Quarto versions first.

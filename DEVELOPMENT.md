@@ -53,3 +53,21 @@ Open the run in the **Actions** tab and find the failing step:
 - **Validate site** – the log lists each problem (missing file, unresolved link). Reproduce locally: `quarto render --output-dir _check && quarto run .github/scripts/check-site.ts _check`.
 - **configure-pages / deploy-pages** – almost always Pages not enabled or the source not set to *GitHub Actions* (setup step 1), or a deployment from a branch other than `main`.
 - Rendering works locally but not in CI – compare Quarto versions first.
+
+## ORCID import (manual)
+
+`scripts/import-orcid.ts` fetches the works listed on the ORCID profile (public API, no credentials) and caches their bibliographic metadata in `data/orcid/works.json`. It is **generated data**: nothing reads it yet, it is not part of the site, and the importer never touches `content/` (curated files).
+
+```bash
+quarto run scripts/import-orcid.ts              # iD taken from `orcid:` in _variables.yml
+quarto run scripts/import-orcid.ts 0000-0000-0000-0000   # or give an iD / ORCID URL
+quarto run scripts/import-orcid.ts --dry-run    # fetch and report, write nothing
+```
+
+The cache is git-ignored (a local, regenerable file; later stages will commit only small derived data if needed). Inspect it directly, e.g. `less data/orcid/works.json`. Behaviour:
+
+- Each ORCID work record (one per `put-code`) is stored with title, type, publication date (year/month/day/text), venue, DOI (lower-cased, URL prefix removed), all external identifiers, contributors, citation text, source and created/modified times. Missing values are `null`/`[]`.
+- ORCID groups records of the same work from different sources; each record carries its `group` number and `preferred-in-group` (ORCID's preferred version). Records are **not** merged or deduplicated here (Stage 7).
+- Output is sorted by `put-code` and the `retrieved` timestamp changes only when the data does, so a repeat import with unchanged data leaves the file untouched.
+- The import fails closed: on any network/API error or incomplete response it exits non-zero and the existing file is left as it was (the file is replaced atomically).
+- It prints a short report of missing fields (no DOI, venue, contributors, ...).

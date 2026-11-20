@@ -1,0 +1,60 @@
+# Build the Quarto site on every pull request and push to main; deploy to
+# GitHub Pages only from main. See DEVELOPMENT.md ("Deployment").
+name: Build and deploy site
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:   # manual run; still deploys only if run on main
+
+# Read-only by default; the deploy job adds what it needs.
+permissions:
+  contents: read
+
+# One deployment at a time; never cancel a deploy part-way.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  QUARTO_VERSION: 1.11.9   # keep in step with the Codespaces Quarto
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        with:
+          version: ${{ env.QUARTO_VERSION }}
+
+      - name: Render site
+        run: quarto render
+
+      - name: Validate site (files, internal links, catalogue markup)
+        run: quarto run .github/scripts/check-site.ts _site
+
+      # Only main produces a deployable artifact.
+      - name: Upload site artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    # Skipped for pull requests and other branches; never runs if build failed.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write      # publish to Pages
+      id-token: write   # prove the deploy comes from this workflow
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@v5
+      - id: deployment
+        uses: actions/deploy-pages@v4

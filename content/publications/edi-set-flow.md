@@ -10,6 +10,7 @@ status: preprint
 featured: false
 roles: [first]
 tags: [RNA editing, Nextflow, R, Computational genomics, Methods development]
+related-software: [edi-set-flow]
 exclude: false
 ---
 

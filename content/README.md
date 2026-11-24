@@ -36,7 +36,7 @@ Planned separation: future importers write to a separate generated location (e.g
 |---|---|---|
 | `id` | yes | Stable internal ID, unique within software. |
 | `title` | yes | Display name. |
-| `github` | yes | Repository URL (title and GitHub link). |
+| `github` | yes | Repository URL (the "GitHub" link in the card's meta line). |
 | `date` | no | Used for ordering only (newest first). Not displayed. |
 | `featured`, `tags`, `exclude` | no | As for publications. |
 | `related-publications` | no | List of publication `id`s. Each adds a link to that paper (labelled with its venue). |

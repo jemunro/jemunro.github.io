@@ -194,6 +194,12 @@ end
 
 local function doi_url(doi) return "https://doi.org/" .. doi end
 
+-- Link text for a paper: its venue ("iScience", "bioRxiv preprint"); "Preprint"/"DOI" if none
+local function venue_label(p)
+  return p.venue and (p.status == "preprint" and p.venue .. " preprint" or p.venue)
+    or (p.status == "preprint" and "Preprint" or "DOI")
+end
+
 local function build(kind)
   local pubs = load_entries("publications")
   local sws = load_entries("software")
@@ -243,9 +249,7 @@ local function build(kind)
         end
         if p.date then meta[#meta + 1] = esc(p.date:sub(1, 4)) end
         -- The venue (e.g. "arXiv preprint", "iScience") is the link to the paper; "DOI" if no venue
-        local venue = p.venue and (p.status == "preprint" and p.venue .. " preprint" or p.venue)
-          or (p.status == "preprint" and "Preprint" or "DOI")
-        meta[#meta + 1] = '<a class="entry-ext" href="' .. esc(doi_url(p.doi)) .. '">' .. esc(venue) .. '</a>'
+        meta[#meta + 1] = '<a class="entry-ext" href="' .. esc(doi_url(p.doi)) .. '">' .. esc(venue_label(p)) .. '</a>'
         -- Related software links sit right after the venue link
         for _, id in ipairs(p.related) do
           local s = sw_by[id]
@@ -267,12 +271,16 @@ local function build(kind)
     sort_entries(sws, false)
     for _, s in ipairs(sws) do
       if not s.exclude then
-        local links = { { label = "GitHub", url = s.github } }
+        -- Same card as a publication: plain-text title, links in the meta line (the repository,
+        -- then the related paper by its venue), keywords below, description folded away.
+        local meta = { '<a class="entry-ext" href="' .. esc(s.github) .. '">GitHub</a>' }
         for _, id in ipairs(s.related) do
           local p = pub_by[id]
-          if p and not p.exclude then links[#links + 1] = { label = p.venue or "DOI", url = doi_url(p.doi) } end
+          if p and not p.exclude then
+            meta[#meta + 1] = '<a class="entry-ext" href="' .. esc(doi_url(p.doi)) .. '">' .. esc(venue_label(p)) .. '</a>'
+          end
         end
-        out[#out + 1] = render_entry("sw", s, s.github, "GitHub repository", links)
+        out[#out + 1] = render_entry("sw", s, s.github, table.concat(meta, " · "), {}, true)
       end
     end
   end

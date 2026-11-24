@@ -1,0 +1,36 @@
+# The shared keyword vocabulary for both catalogues. Edit by hand.
+#  - Entries' `tags` must use these spellings exactly (sentence case). Nothing validates this yet.
+#  - The sidebar "Keywords" list is built from this file, in this order: every keyword is a
+#    clickable filter with a count of the entries on the current page (0 if unused).
+#  - To add a keyword, add it here first, then use it in an entry's `tags`.
+groups:
+  - name: Fields and diseases
+    keywords:
+      - Computational genomics
+      - Rare diseases
+      - Epilepsy
+      - Neurological disorders
+      - Cardiovascular genetics
+      - Malaria
+      - Tuberculosis
+      - Environmental microbiology
+  - name: Data and methods
+    keywords:
+      - Whole-genome sequencing
+      - Long-read sequencing
+      - Amplicon sequencing
+      - Single-cell
+      - Structural variants
+      - Repeat expansions
+      - RNA editing
+      - Population genetics
+      - Genome-wide association
+      - Variant prioritisation
+      - Pharmacogenomics
+      - Medical imaging
+      - Vaccine antigens
+      - Methods development
+  - name: Programming languages
+    keywords:
+      - Nextflow
+      - R

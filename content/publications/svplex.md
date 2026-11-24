@@ -11,7 +11,7 @@ status: preprint                 # preprint | published
 # ---- Curated (edited by hand; automation must never overwrite) ----
 featured: true
 roles: [first]                   # first | senior | corresponding | coauthor
-tags: [Structural variants, Whole-genome sequencing, Nextflow]
+tags: [Structural variants, Whole-genome sequencing, Nextflow, Computational genomics, Methods development]
 related-software: [svplex]       # IDs in content/software/
 exclude: false
 ---

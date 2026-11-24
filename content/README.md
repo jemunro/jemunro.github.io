@@ -21,12 +21,12 @@ Planned separation: future importers write to a separate generated location (e.g
 | `id` | yes | Stable internal ID, unique within publications. Never change it after the entry exists; other files refer to it. |
 | `title` | yes | Title (quote it if it contains `:`). |
 | `doi` | yes | DOI without the `https://doi.org/` prefix. The title and venue link use it. |
-| `authors` | no | List of names, shown as given. |
+| `authors` | no | List of names, shown as given. A collapsed card shows the first author, the last author and the site owner (bold) with "…" for omitted authors; lists of three or fewer are shown in full, and an open card shows everyone. The owner is recognised by surname and first initial of `name` in `_variables.yml`, so "Jacob Munro", "J. E. Munro" etc. all match. |
 | `date` | no | `YYYY`, `YYYY-MM` or `YYYY-MM-DD`. Only the year is displayed; the full value orders entries (a missing month/day sorts as the latest of that period). |
-| `venue` | no | Journal or server (e.g. `bioRxiv`); also the label of the DOI link. |
+| `venue` | no | Journal or server (e.g. `bioRxiv`); shown on the card as the link to the paper (via the DOI), e.g. "bioRxiv preprint" or "iScience". |
 | `status` | no | `preprint` (adds "preprint" after the venue) or `published` (default). |
 | `featured` | no | `true` pins the entry above regular entries and adds the gold marker. |
-| `roles` | no | List from `first`, `senior`, `corresponding`, `coauthor`. `first`/`senior`/`corresponding` show a badge (several may apply); `coauthor` is the default and shows none. Subject to human review. |
+| `roles` | no | List from `first`, `senior`, `corresponding`, `coauthor`. `first`/`senior`/`corresponding` show as a gold chip at the start of the keyword row, clickable like a keyword (several may apply); `coauthor` is the default and shows none. Subject to human review. |
 | `tags` | no | Keyword list. Use the shared vocabulary (spelling must match the other entries). |
 | `related-software` | no | List of software `id`s. Each adds a GitHub link taken from that software entry. |
 | `exclude` | no | `true` hides the entry (and links to it from software) without deleting the file. |
@@ -73,3 +73,8 @@ To remove an entry delete its file, or set `exclude: true` to keep it but hide i
 
 ## Overrides for the ORCID matcher
 `content/overrides.yml` (not an entry) is read by `scripts/match-orcid.ts`: `exclude` lists DOIs that must never be proposed as new publications, and `preprint-of` links a preprint DOI to its published DOI when ORCID does not group them. It is curated by hand. See `DEVELOPMENT.md` ("Matching ORCID works to the catalogue").
+
+## Keyword vocabulary
+The shared vocabulary for both catalogues is [`keywords.yml`](keywords.yml): fields and diseases, data and methods, and programming languages (currently Nextflow and R). Entries' `tags` must use its spellings exactly (sentence case); to add a keyword, add it to `keywords.yml` first. Nothing validates tags against it yet. It was proposed from the titles of the publications found on ORCID and is for the site owner to edit.
+
+The sidebar "Keywords" list (below Profiles) is built from `keywords.yml`, in file order. Every keyword is a clickable filter with a count of the entries on the current page (0 if none).

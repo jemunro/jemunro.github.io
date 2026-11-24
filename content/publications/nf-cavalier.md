@@ -9,7 +9,7 @@ status: preprint
 
 featured: true
 roles: [first]
-tags: [Rare diseases, Variant prioritisation, Nextflow]
+tags: [Rare diseases, Variant prioritisation, Nextflow, Computational genomics, Methods development]
 related-software: [nf-cavalier]
 exclude: false
 ---

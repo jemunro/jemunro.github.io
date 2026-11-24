@@ -15,9 +15,9 @@ Build a minimal Quarto/GitHub Pages portfolio with a **Publications** homepage a
 | 5 | GitHub Pages deployment | Complete |
 | 6 | Manual ORCID publication import | Complete |
 | 7 | Identity matching, preprint relationships and exclusions | Complete |
-| 8 | Client-side OpenAlex citation counts | Not started |
-| 9 | Curated GitHub repository metadata import | Not started |
-| 10 | AI-assisted draft descriptions and tags | Not started |
+| 8 | AI-assisted draft descriptions and tags | Not started |
+| 9 | Client-side OpenAlex citation counts | Not started |
+| 10 | Curated GitHub repository metadata import | Not started |
 | 11 | Agent-assisted new-publication branch workflow | Not started |
 
 ## Stage 0 — Development environment
@@ -60,20 +60,20 @@ Build a minimal Quarto/GitHub Pages portfolio with a **Publications** homepage a
 
 **Pass when:** Repeated import is idempotent; test cases for duplicates and preprint updates are handled; exclusions persist.
 
-## Stage 8 — OpenAlex citations (client-side)
+## Stage 8 — AI-assisted draft content
+**Scope:** Claude Code (or another agent), when prompted, drafts initial 1–2 sentence descriptions, candidate keywords and a possible authorship role for new items, using available abstracts/documentation. No automatic regeneration of approved text.
+
+**Pass when:** Generated fields are clearly drafts; no unsupported claims are inserted; an edited approved entry cannot be overwritten.
+
+## Stage 9 — OpenAlex citations (client-side)
 **Scope:** Browser JavaScript queries the OpenAlex API by DOI (batched, one request per page) and shows citation counts on entries. No cache, no JSON file and no build-time step; counts are always live. Optionally a "most cited" sort if cheap. Entries without a DOI or without an OpenAlex match show no count (never guessed). Citation data is never written into `content/`.
 
 **Pass when:** A sample of counts matches OpenAlex records; unmatched works and failed/blocked requests show no count and the page still works; the site is unaffected with JavaScript disabled. Note: OpenAlex is keyless and CORS-enabled; add its optional `mailto` parameter only with a generic, non-personal address supplied by the owner.
 
-## Stage 9 — Selected GitHub repositories
+## Stage 10 — Selected GitHub repositories
 **Scope:** Manually define which repositories appear, then retrieve supported GitHub metadata without overwriting curated fields.
 
 **Pass when:** Only explicitly selected repos appear; missing/private repos fail gracefully; descriptions/tags remain editable.
-
-## Stage 10 — AI-assisted draft content
-**Scope:** Claude Code (or another agent), when prompted, drafts initial 1–2 sentence descriptions, candidate keywords and a possible authorship role for new items, using available abstracts/documentation. No automatic regeneration of approved text.
-
-**Pass when:** Generated fields are clearly drafts; no unsupported claims are inserted; an edited approved entry cannot be overwritten.
 
 ## Stage 11 — Agent-assisted new-publication branch
 **Scope:** A documented runbook/prompt (in `DEVELOPMENT.md`, plus a short prompt file if useful) for Claude Code or another agent: run the ORCID importer, compare results with `content/` (ids, DOIs, exclusions), and for each newly found work create a separate branch containing a draft `content/publications/*.md` entry (drafted description, tags, proposed authorship role, clearly marked as draft). The site owner reviews, pushes and merges the PR manually.
@@ -138,8 +138,8 @@ Record milestone completion dates, decisions and relevant caveats here as the pr
 
 ### 2026-11-24 — Plan revised: manual updates only
 - Decision: the site is updated manually only. Stage 11 is an agent-prompted workflow where a new work found via ORCID gets its own branch and the owner pushes and merges the PR manually (no GitHub Actions, bots or tokens).
-- Decision: Stage 8 citation counts are fetched live in the browser from OpenAlex by DOI; no cache and no build step. OpenAlex is still not used to discover publications.
-- Stage 10 drafting is done by an agent on request. The Stage 6 note that `data/` is git-ignored remains valid (the importer is run on demand).
+- Decision: Stage 9 (then numbered 8) citation counts are fetched live in the browser from OpenAlex by DOI; no cache and no build step. OpenAlex is still not used to discover publications.
+- Stage 8 (then numbered 10) drafting is done by an agent on request. The Stage 6 note that `data/` is git-ignored remains valid (the importer is run on demand).
 
 ### 2026-11-24 — Stage 7 complete (provisionally approved)
 - Added `scripts/match-orcid.ts` (CLI), `scripts/lib/match.ts` (pure matching rules), `scripts/test-match.ts` (15 tests on synthetic records) and `content/overrides.yml` (manual `exclude` and `preprint-of`). Run: `quarto run scripts/match-orcid.ts`; documented in `DEVELOPMENT.md` and `content/README.md`. No new dependencies (YAML parsing uses Quarto's bundled `stdlib/yaml`).
@@ -149,3 +149,6 @@ Record milestone completion dates, decisions and relevant caveats here as the pr
 - Review findings (resolved with the owner): the content entry `svplex` was missing from ORCID, so it was added there; ORCID stores it with an arXiv id and no DOI, so the matcher derives the deterministic arXiv DOI (`10.48550/arxiv.<id>`) and matches it. Two older preprints (PvAmpSeq, 2025; PET-CT TB cohort, 2023) were found published under changed titles (iScience, 2026; Lancet Respiratory Medicine, 2026; DOIs confirmed against Crossref by the owner's request, one-off, not part of the tooling); both were added to ORCID and linked with `preprint-of` in `content/overrides.yml`. Five preprint-only works remain (svplex, nf-cavalier and three 2026 preprints) and are reported as preprints. A title-cleaning bug (ORCID returns HTML-escaped tags such as `&lt;i&gt;` in titles) was found on this run and fixed, with tests (15 total).
 - Not done (by scope): nothing creates content entries or branches from `new` works (Stage 11); no OpenAlex/Crossref lookups.
 - Sign-off: the site owner reviewed the output and provisionally approved it. One ORCID edit made late in the session had not appeared in the public API when last checked (two re-imports returned the same 53 records), so it is unverified; re-run the importer and matcher once it propagates.
+
+### 2026-11-24 — Plan reordered
+- AI-assisted draft content is now Stage 8, ahead of client-side OpenAlex citations (Stage 9) and selected GitHub repositories (Stage 10), so the publication catalogue can be filled in first. Scopes are unchanged; only the numbering moved. Earlier log entries that mention the old numbers are annotated.

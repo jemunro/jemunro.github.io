@@ -179,3 +179,6 @@ Record milestone completion dates, decisions and relevant caveats here as the pr
 
 ### 2026-11-24 — Software ordering
 - Software entries are no longer featured (flag removed from all entries and ignored by the catalogue). Software takes the date of its newest related publication and is ordered newest first by default; the browser sort offers newest/oldest paper and A–Z/Z–A. The software `date` field is now only a fallback. Supersedes the earlier "software A–Z by default" and software-featured notes. Not verified in a real browser.
+
+### 2026-11-24 — AmpSeqR software, two role changes
+- Added the AmpSeqR repository as a software entry linked to its paper. Authorship role `first` set on two further papers at the owner's request (the owner is not first in the author list on either).

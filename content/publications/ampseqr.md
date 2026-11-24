@@ -8,8 +8,9 @@ venue: F1000Research
 status: published
 
 featured: false
-roles: []
+roles: [first]
 tags: [Malaria, Infectious diseases, Amplicon sequencing, Methods development, R]
+related-software: [ampseqr]
 exclude: false
 ---
 

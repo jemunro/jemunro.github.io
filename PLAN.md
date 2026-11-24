@@ -13,13 +13,12 @@ Build a minimal Quarto/GitHub Pages portfolio with a **Publications** homepage a
 | 3 | Editable Markdown content model | Complete |
 | 4 | Search, filters, featured ordering | Complete |
 | 5 | GitHub Pages deployment | Complete |
-| 6 | Manual ORCID publication import | Complete (awaiting review) |
+| 6 | Manual ORCID publication import | Complete |
 | 7 | Identity matching, preprint relationships and exclusions | Not started |
-| 8 | Manual OpenAlex citation matching and retrieval | Not started |
+| 8 | Client-side OpenAlex citation counts | Not started |
 | 9 | Curated GitHub repository metadata import | Not started |
 | 10 | AI-assisted draft descriptions and tags | Not started |
-| 11 | One-PR-per-paper review workflow | Not started |
-| 12 | Scheduled discovery, metadata and citation updates | Not started |
+| 11 | Agent-assisted new-publication branch workflow | Not started |
 
 ## Stage 0 — Development environment
 **Scope:** Devcontainer with Quarto, relevant VS Code extensions and a private forwarded preview port. No website implementation.
@@ -61,10 +60,10 @@ Build a minimal Quarto/GitHub Pages portfolio with a **Publications** homepage a
 
 **Pass when:** Repeated import is idempotent; test cases for duplicates and preprint updates are handled; exclusions persist.
 
-## Stage 8 — OpenAlex citations (manual)
-**Scope:** Resolve catalogue items to OpenAlex works and fetch citation counts, keeping citation data separate from curated content.
+## Stage 8 — OpenAlex citations (client-side)
+**Scope:** Browser JavaScript queries the OpenAlex API by DOI (batched, one request per page) and shows citation counts on entries. No cache, no JSON file and no build-time step; counts are always live. Optionally a "most cited" sort if cheap. Entries without a DOI or without an OpenAlex match show no count (never guessed). Citation data is never written into `content/`.
 
-**Pass when:** A sample of counts is checked against source records; unmatched works are flagged rather than guessed; API failures preserve prior values.
+**Pass when:** A sample of counts matches OpenAlex records; unmatched works and failed/blocked requests show no count and the page still works; the site is unaffected with JavaScript disabled. Note: OpenAlex is keyless and CORS-enabled; add its optional `mailto` parameter only with a generic, non-personal address supplied by the owner.
 
 ## Stage 9 — Selected GitHub repositories
 **Scope:** Manually define which repositories appear, then retrieve supported GitHub metadata without overwriting curated fields.
@@ -72,19 +71,14 @@ Build a minimal Quarto/GitHub Pages portfolio with a **Publications** homepage a
 **Pass when:** Only explicitly selected repos appear; missing/private repos fail gracefully; descriptions/tags remain editable.
 
 ## Stage 10 — AI-assisted draft content
-**Scope:** Generate initial 1–2 sentence descriptions, candidate keywords and possible authorship role for new items, using available abstracts/documentation. No automatic regeneration of approved text.
+**Scope:** Claude Code (or another agent), when prompted, drafts initial 1–2 sentence descriptions, candidate keywords and a possible authorship role for new items, using available abstracts/documentation. No automatic regeneration of approved text.
 
 **Pass when:** Generated fields are clearly drafts; no unsupported claims are inserted; an edited approved entry cannot be overwritten.
 
-## Stage 11 — Review pull requests
-**Scope:** Propose each newly discovered paper in a separate GitHub PR; review substantive metadata changes. Avoid duplicating pending or merged proposals.
+## Stage 11 — Agent-assisted new-publication branch
+**Scope:** A documented runbook/prompt (in `DEVELOPMENT.md`, plus a short prompt file if useful) for Claude Code or another agent: run the ORCID importer, compare results with `content/` (ids, DOIs, exclusions), and for each newly found work create a separate branch containing a draft `content/publications/*.md` entry (drafted description, tags, proposed authorship role, clearly marked as draft). The site owner reviews, pushes and merges the PR manually.
 
-**Pass when:** One test discovery creates one reviewable PR, a repeat creates none, and merge publishes only approved content.
-
-## Stage 12 — Scheduled updates
-**Scope:** Schedule ORCID discovery and routine metadata refresh; update OpenAlex citation JSON daily, independently of full Quarto rerenders. Maintain reliable cached fallbacks.
-
-**Pass when:** Scheduled jobs are idempotent, errors are visible, curated content remains protected, and citation numbers update on the deployed site without a full site rebuild.
+**Pass when:** A test run with one new work yields one branch with one new draft entry; a repeat run yields nothing for works already present or excluded; merging to `main` deploys through the existing Stage 5 workflow.
 
 ## Deferred unless explicitly requested
 Blog, individual project pages, citation dashboards/graphs, full-text abstract hosting, scraping Google Scholar, automatic inclusion of all GitHub repos, and extra frontend frameworks.
@@ -112,7 +106,7 @@ Record milestone completion dates, decisions and relevant caveats here as the pr
 - Publication fields: `id`, `title`, `doi`, `authors`, `date`, `venue`, `status` (preprint/published), `featured`, `roles` (list: first/senior/corresponding/coauthor), `tags`, `related-software`, `exclude`. Software fields: `id`, `title`, `github`, `date` (ordering only), `featured`, `tags`, `related-publications`, `exclude`.
 - Decision — custom Lua shortcode instead of a native Quarto listing: a listing was prototyped and rejected because (a) it cannot expose the Markdown body as the description (descriptions came back empty, even with the default template), (b) it forces rendering of a detail page per entry, contrary to the "no project-detail pages" design, and (c) it cannot join publications to software. `catalogue.lua` (~205 lines) reads the files, validates them, sorts and emits the same markup as Stage 2. No new dependencies.
 - Decision — cross-links are by ID and derived: a paper's GitHub link comes from its related software entry; a software entry's paper link (labelled with the venue) comes from the related publication. URLs are never duplicated across files. `exclude: true` also removes links to that entry.
-- Decision — separation for future automation: curated fields (`featured`, `roles`, `tags`, `exclude`, `related-*`, body) live only in `content/` and are never to be written by importers; generated metadata (ORCID/OpenAlex/GitHub, citation JSON) will live in a separate location (e.g. `data/`) from Stage 6 onward. Bibliographic fields currently in the entry files (`title`, `doi`, `authors`, `date`, `venue`) are the interim source; how importers merge with them is for Stage 6/7 to decide.
+- Decision — separation for future automation: curated fields (`featured`, `roles`, `tags`, `exclude`, `related-*`, body) live only in `content/` and are never to be written by importers; generated metadata (ORCID/GitHub) will live in a separate location (e.g. `data/`) from Stage 6 onward. Bibliographic fields currently in the entry files (`title`, `doi`, `authors`, `date`, `venue`) are the interim source; how importers merge with them is for Stage 6/7 to decide.
 - Decision — ordering (featured, then newest `date`, then title) is implemented in the shortcode because the page needs a deterministic order; Stage 4 still owns search, filters and any UI for ordering. Month-only dates sort as the latest of that month; this keeps the Stage 2 order. The sample software `date` values copy the associated paper's date for ordering only (not verified release dates).
 - Tags are still free text; the controlled vocabulary and its validation are Stage 4.
 - Verified: `quarto render` (to a separate output dir; preview was running) succeeds without warnings; output markup (order, badges, tags, links, ids) is identical to Stage 2 apart from line-wrapping of description text. Tested: edited a description (appeared), added a temporary publication + software pair with senior/corresponding badges and cross-links (appeared, correct links), `exclude: true` (hidden, link removed), invalid role (build error naming the file), then removed the temporary files (back to two entries each). Preview refreshes after content edits when a page `.qmd` is saved (tested).
@@ -136,8 +130,13 @@ Record milestone completion dates, decisions and relevant caveats here as the pr
 - Owner actions remaining: push a branch and open a PR to see the build check run; when approved, set Pages source to GitHub Actions (and make the repo public if on a free plan), then merge to `main`.
 - Sign-off: the pull-request build check passed on GitHub (deploy skipped, as designed); Pages source set to GitHub Actions, the repository made public and the pull request merged; the `main` deployment succeeded. The site owner reviewed the live site (light/dark, mobile layout, search, keyword filtering, navigation) and approved it. This resolves the "not verified" items above, including the action versions, which worked on first run.
 
-### 2026-11-20 — Stage 6 implemented (awaiting review)
+### 2026-11-20 — Stage 6 complete
 - Added `scripts/import-orcid.ts` (TypeScript on Quarto's bundled Deno, same approach as the Stage 5 validator; no new dependencies) and generated cache `data/orcid/works.json`. Run: `quarto run scripts/import-orcid.ts` (iD read from the `orcid:` link in `_variables.yml`, or passed as an argument; `--dry-run`, `--out`). Documented in `DEVELOPMENT.md`.
-- Decisions: public ORCID API v3.0 (works list for groups, then bulk full-record fetch for contributors/citation); one stored record per ORCID `put-code` with group number and ORCID's preferred flag, no merging; ORCID has no publication "status" field, so only ORCID `type` (e.g. journal-article, preprint) is stored and status inference is left to Stage 7; DOI normalised to lower case without URL prefix, original external-id entries kept verbatim; output deterministic and written only when data changes; fails closed (partial/failed fetch never replaces the cache); generated data lives in `data/`, separate from `content/`, and is **git-ignored** (revised after review: the raw cache changes often and holds more than downstream stages need, and Stage 12 discovery should rely on `content/` rather than a committed cache; Stage 7 decides what small derived file, if any, is committed).
+- Decisions: public ORCID API v3.0 (works list for groups, then bulk full-record fetch for contributors/citation); one stored record per ORCID `put-code` with group number and ORCID's preferred flag, no merging; ORCID has no publication "status" field, so only ORCID `type` (e.g. journal-article, preprint) is stored and status inference is left to Stage 7; DOI normalised to lower case without URL prefix, original external-id entries kept verbatim; output deterministic and written only when data changes; fails closed (partial/failed fetch never replaces the cache); generated data lives in `data/`, separate from `content/`, and is **git-ignored** (revised after review: the raw cache changes often and holds more than downstream stages need, and discovery should rely on `content/` rather than a committed cache; Stage 7 decides what small derived file, if any, is committed).
 - Verified: import retrieves all works (record counts match ORCID's group listing); repeat run reports no change and the file is byte-identical; a simulated network failure, an unknown iD (404) and an invalid argument exit non-zero leaving the cache intact; a profile with sparse metadata imports without errors; `content/` unchanged (git status shows only new files); `quarto render` succeeds, site validator passes and `data/` is not in the built site.
-- Not done (by scope): nothing consumes the cache; no matching, deduplication, preprint reconciliation, OpenAlex, AI drafting, PRs or scheduling.
+- Not done (by scope): nothing consumes the cache; no matching, deduplication, preprint reconciliation, OpenAlex, AI drafting or PRs.
+
+### 2026-11-24 — Plan revised: manual updates only
+- Decision: the site is updated manually only. Stage 11 is an agent-prompted workflow where a new work found via ORCID gets its own branch and the owner pushes and merges the PR manually (no GitHub Actions, bots or tokens).
+- Decision: Stage 8 citation counts are fetched live in the browser from OpenAlex by DOI; no cache and no build step. OpenAlex is still not used to discover publications.
+- Stage 10 drafting is done by an agent on request. The Stage 6 note that `data/` is git-ignored remains valid (the importer is run on demand).

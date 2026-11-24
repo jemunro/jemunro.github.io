@@ -26,14 +26,15 @@ Build a minimal, maintainable personal academic portfolio using **Quarto**, deve
 - Authorship roles (first, senior and corresponding where appropriate) are separate from research-topic keywords and subject to human review.
 - Do not create individual project-detail pages by default. Link to original publications and repository documentation.
 
-## Planned content and automation (not for initial milestones)
+## Planned content and workflow (not for initial milestones)
+The site is updated manually only; there are no scheduled jobs or automated PRs.
 - Curated, version-controlled Markdown files hold descriptions, keywords, featured flags, authorship roles, exclusions and cross-links.
 - **ORCID** is the source for publication discovery; **OpenAlex** provides citation metrics and may enrich identifiers. Do not use OpenAlex to discover additional publications independently.
-- New papers receive an individual reviewable pull request with an AI-drafted description/tags and proposed authorship role. Approved text is never automatically regenerated.
+- When prompted, an agent pulls ORCID and, for each new paper, creates a separate branch with a draft entry (AI-drafted description/tags and proposed authorship role). The site owner pushes and merges the PR manually. Approved text is never regenerated.
 - Software repos are selected manually; AI may draft initial descriptions/tags for review.
-- Routine bibliographic metadata may refresh automatically; substantive changes need review.
-- OpenAlex citation counts will eventually be refreshed daily into a JSON cache that the browser reads. The site should not require a complete Quarto rebuild just to refresh counts.
-- Add integrations manually and test them before enabling scheduled automation.
+- Bibliographic metadata changes are made on a branch and reviewed before merging.
+- OpenAlex citation counts are fetched live in the browser by DOI. No cache, JSON file or build step.
+- Do not add GitHub Actions automation, scheduled jobs or stored tokens for content updates (the Pages deploy workflow is the only workflow).
 
 ## Definition of done for each milestone
 1. The scoped feature works and the Quarto site renders.

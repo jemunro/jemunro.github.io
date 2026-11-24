@@ -1,0 +1,16 @@
+# Manual overrides for the ORCID matcher (scripts/match-orcid.ts).
+# Curated by hand; the matcher only reads this file.
+
+# Works that must never be proposed as new. List a DOI (a preprint DOI also covers
+# the published version it is linked to). `note` is optional.
+exclude: []
+#  - doi: 10.1234/example
+#    note: not my work / duplicate record
+
+# Link a preprint to its published version when the titles differ and ORCID does
+# not group them. Once linked, the preprint is ignored.
+preprint-of:
+  - preprint: 10.1101/2025.05.26.25327775   # PvAmpSeq (medRxiv); title changed on publication
+    published: 10.1016/j.isci.2026.115799   # iScience
+  - preprint: 10.1101/2023.07.03.23292111   # TB PET/CT imaging (medRxiv); title changed
+    published: 10.1016/S2213-2600(26)00056-1   # Lancet Respiratory Medicine

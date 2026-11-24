@@ -7,4 +7,5 @@ _site/
 _check/
 
 # Generated importer caches (regenerate with the scripts in scripts/)
-/data/
+/data/*
+!/data/publications.json

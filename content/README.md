@@ -70,3 +70,6 @@ To remove an entry delete its file, or set `exclude: true` to keep it but hide i
 
 ## Preview
 `quarto preview` only watches page files: after editing a content file, save `index.qmd` or `software.qmd` (or restart the preview) to refresh. Do not run a plain `quarto render` during a preview (see `DEVELOPMENT.md`).
+
+## Overrides for the ORCID matcher
+`content/overrides.yml` (not an entry) is read by `scripts/match-orcid.ts`: `exclude` lists DOIs that must never be proposed as new publications, and `preprint-of` links a preprint DOI to its published DOI when ORCID does not group them. It is curated by hand. See `DEVELOPMENT.md` ("Matching ORCID works to the catalogue").

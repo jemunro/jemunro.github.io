@@ -71,3 +71,23 @@ The cache is git-ignored (a local, regenerable file; later stages will commit on
 - Output is sorted by `put-code` and the `retrieved` timestamp changes only when the data does, so a repeat import with unchanged data leaves the file untouched.
 - The import fails closed: on any network/API error or incomplete response it exits non-zero and the existing file is left as it was (the file is replaced atomically).
 - It prints a short report of missing fields (no DOI, venue, contributors, ...).
+
+## Matching ORCID works to the catalogue (manual)
+
+`scripts/match-orcid.ts` reads the raw ORCID cache (see above) and `content/publications/`, collapses the 50-odd raw records into one line per publication, and writes **`data/publications.json`**, the one generated file that is committed (the rest of `data/` is git-ignored). It reads `content/` and never writes to it.
+
+```bash
+quarto run scripts/import-orcid.ts      # refresh the raw cache first (network)
+quarto run scripts/match-orcid.ts       # rewrite data/publications.json and print a report
+quarto run scripts/match-orcid.ts --dry-run   # report only
+quarto run scripts/test-match.ts        # tests for the matching rules (no network)
+```
+
+Each line of `data/publications.json` has: `id` (the DOI, or a title-based id when ORCID has no DOI), `doi`, `title`, `year`, `status` (`published` | `preprint`), `venue`, `state` and `entry`, plus `also`, `stale-doi` and `note` only when relevant. There are no timestamps, put-codes or group numbers, so a re-run with no real change is byte-identical and a change to one work is a one-line diff.
+
+- **`state`**: `matched` (a content entry has one of the work's DOIs; `entry` is its id), `new` (not in `content/`, a candidate for a new entry), `excluded` (see below).
+- **Deduplication**: records are one work if ORCID grouped them or they share a DOI. A record with an arXiv id but no DOI is given the deterministic arXiv DOI (`10.48550/arxiv.<id>`).
+- **Preprints**: a work with a published (non-preprint) DOI is reported under that DOI and its preprint DOIs are ignored (listed in `also`). A preprint-only work whose title equals a published work's title is merged into it. Any other preprint stays `status: preprint` until you link it with `preprint-of` in `content/overrides.yml` (the report lists these). Nothing outside ORCID is consulted.
+- **`stale-doi`**: a content entry still carries a DOI that is not the work's current one (typically a preprint DOI after publication). The report lists these; updating the entry is a manual, reviewed edit.
+- **Manual overrides** live in `content/overrides.yml`: `exclude` (DOIs never to propose; a preprint DOI also covers its published version) and `preprint-of` (preprint DOI -> published DOI). Entries with `exclude: true` are treated as excluded too.
+- **Warnings** (printed, not fatal): works with no DOI, several published DOIs for one work, content entries whose DOI is not in the ORCID data, overrides naming unknown DOIs. Errors (exit 1, nothing written): unreadable cache, malformed overrides, duplicate ids, or two entries matching one work.

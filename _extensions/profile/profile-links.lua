@@ -31,14 +31,23 @@ return {
     return pandoc.Div({ pandoc.BulletList(items) }, pandoc.Attr("", { "profile-links" }))
   end,
 
-  -- {{< research-focus >}}: the research_focus variable ("A · B · C") shown as compact keyword tags.
-  ["research-focus"] = function()
-    local v = quarto.variables.get("research_focus")
-    local s = v and pandoc.utils.stringify(v) or ""
+  -- {{< sidebar-keywords >}}: every keyword in content/keywords.yml (the shared vocabulary), in
+  -- file order, as keyword chips. They are the same kind of button as the keywords on entries
+  -- (data-tag), so catalogue.js makes them filter the catalogue on the current page and fills in
+  -- the count of matching entries.
+  ["sidebar-keywords"] = function()
+    local root = quarto.project.directory or "."
+    local fh = io.open(pandoc.path.join({ root, "content", "keywords.yml" }), "r")
+    if not fh then return pandoc.Null() end
+    local text = fh:read("a"); fh:close()
+    local meta = pandoc.read("---\n" .. text .. "\n---\n", "markdown").meta
     local tags = {}
-    for part in s:gmatch("[^·]+") do
-      part = part:gsub("^%s+", ""):gsub("%s+$", "")
-      if part ~= "" then tags[#tags + 1] = '<span class="tag">' .. part .. '</span>' end
+    for _, g in ipairs(meta.groups or {}) do
+      for _, kw in ipairs(g.keywords or {}) do
+        local esc = pandoc.utils.stringify(kw):gsub("&", "&amp;"):gsub("<", "&lt;"):gsub(">", "&gt;"):gsub('"', "&quot;")
+        tags[#tags + 1] = '<button type="button" class="tag tag-kw" data-tag="' .. esc .. '">' .. esc
+          .. '<span class="tag-count"></span></button>'
+      end
     end
     if #tags == 0 then return pandoc.Null() end
     return pandoc.RawBlock("html", '<div class="focus-tags">' .. table.concat(tags, " ") .. '</div>')

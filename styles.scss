@@ -51,7 +51,7 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
   border-bottom: 1px solid var(--rule);
 
   p { margin-bottom: .6rem; }
-  p > strong:only-child {  // small section labels ("Research focus", "Profiles")
+  p > strong:only-child {  // small section labels ("Keywords", "Profiles")
     display: block; margin-top: .9rem;
     font-size: .7rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase;
     color: var(--muted);
@@ -67,6 +67,8 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
     position: sticky;
     top: 1.5rem;
     align-self: start;
+    // The keyword list can be long: scroll inside the sidebar rather than being cut off
+    max-height: calc(100vh - 3rem); overflow-y: auto;
     border-bottom: 0;
     padding-bottom: 0;
     padding-right: 1.5rem;
@@ -87,12 +89,70 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
   .entry-title {
     font-size: 1.08rem; font-weight: 600; line-height: 1.3;
     overflow-wrap: anywhere;  // very long titles/URLs never force horizontal scrolling
+    color: var(--ink);  // plain-text titles (publication cards); Software titles are links
     a { color: var(--ink); text-decoration: none; }
     a:hover { color: var(--accent); text-decoration: underline; text-underline-offset: .15em; }
     .tag { margin-right: .35rem; }
   }
   .entry-meta { font-size: .8rem; color: var(--muted); margin: .2rem 0 0; }
   .entry-desc { margin: .35rem 0 .5rem; font-size: .92rem; }
+  .entry-meta strong { color: var(--ink); font-weight: 700; }  // the site owner in author lists
+  // External links in the meta line (the venue = link to the paper, then GitHub): accent-coloured
+  // so they read as links inside the muted line
+  .entry-meta a.entry-ext {
+    color: var(--accent); text-decoration: none;
+    &:hover { text-decoration: underline; text-underline-offset: .15em; }
+    &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: .15rem; }
+  }
+
+  // Publication cards: a native <details> that starts collapsed. The summary (title + meta)
+  // is the click target, with a chevron at the right; the description is the folded part.
+  .entry-card > .entry-summary {
+    display: flex; align-items: flex-start; gap: .75rem;
+    cursor: pointer; list-style: none;
+    &:hover .entry-title { color: var(--accent); }
+    &::-webkit-details-marker { display: none; }
+    &::after {
+      content: ""; flex: none; width: .45rem; height: .45rem; margin-top: .5rem;
+      border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+      transform: rotate(45deg); transition: transform .15s;
+    }
+    &:hover::after { border-color: var(--accent); }
+    &:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  }
+  .entry-card[open] > .entry-summary::after { transform: rotate(-135deg); margin-top: .7rem; }
+  .entry-head { flex: 1 1 auto; min-width: 0; }
+  // Collapsed shows the shortened author list, open shows the full one
+  .entry-card:not([open]) .authors-full { display: none; }
+  .entry-card[open] .authors-short { display: none; }
+  .entry-card + .entry-foot { margin-top: .5rem; }
+
+  // Hover highlight covers the whole card: title, description, keywords and links. The padding
+  // is cancelled by the negative margin, so the text does not move.
+  &.entry-collapsible {
+    padding: .3rem .6rem .3rem .85rem; margin: -.2rem 0; cursor: pointer;
+    border-radius: 0 .35rem .35rem 0;
+    transition: background-color .15s;
+    &:hover { background: color-mix(in srgb, var(--accent) 7%, transparent); }
+    &:has(> .entry-card > .entry-summary:active) { background: color-mix(in srgb, var(--accent) 14%, transparent); }
+  }
+
+  // Opening animation. The description always fades and slides in; browsers that support
+  // ::details-content also animate the height (others just open instantly with the fade).
+  .entry-card[open] .entry-desc { animation: entry-reveal .22s ease-out; }
+  @supports selector(::details-content) {
+    .entry-card { interpolate-size: allow-keywords; }
+    .entry-card::details-content {
+      block-size: 0; overflow: hidden;
+      transition: block-size .22s ease, content-visibility .22s allow-discrete;
+    }
+    .entry-card[open]::details-content { block-size: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .entry-card[open] .entry-desc { animation: none; }
+    .entry-card::details-content { transition: none; }
+    .entry-collapsible, .entry-card > .entry-summary::after { transition: none; }
+  }
 
   // Keywords on the left, external links always on the right (left-aligned below on narrow screens)
   .entry-foot {
@@ -101,6 +161,10 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
   }
   .entry-tags { display: flex; flex-wrap: wrap; gap: .3rem; }
   .entry-links { margin-left: auto; color: var(--muted); }
+}
+@keyframes entry-reveal {
+  from { opacity: 0; transform: translateY(-.3rem); }
+  to { opacity: 1; transform: none; }
 }
 @media (max-width: 575.98px) {
   .entry .entry-links { margin-left: 0; }
@@ -116,7 +180,8 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
   color: var(--soft-ink);
   vertical-align: .08em;
 }
-.tag-role { color: var(--role-ink); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+// Authorship role chips (clickable, in the keyword row): same gold as the Featured badge
+.tag-role { color: var(--warm-ink); background: color-mix(in srgb, var(--warm) 18%, transparent); }
 .tag-featured {
   color: var(--warm-ink); background: color-mix(in srgb, var(--warm) 18%, transparent);
   text-transform: uppercase; letter-spacing: .05em; font-size: .62rem; font-weight: 600;
@@ -129,6 +194,9 @@ button.tag-kw {
   &:hover { background: color-mix(in srgb, var(--accent) 22%, var(--soft)); }
   &:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
   &.active { background: var(--brand); color: var(--bs-body-bg); }
+  // Role chips keep the Featured gold for hover and active
+  &.tag-role:hover { background: color-mix(in srgb, var(--warm) 32%, transparent); }
+  &.tag-role.active { background: var(--warm); color: var(--bs-body-bg); }
 }
 
 // Search / sort / keyword toolbar (built by catalogue.js; absent without JavaScript)
@@ -159,9 +227,13 @@ a:hover { text-decoration: underline; text-underline-offset: .15em; }
 .site-tabs .nav-link:hover { color: var(--ink); text-decoration: none; }
 .site-tabs .nav-link.active { box-shadow: inset 0 2px 0 var(--brand); }
 
-// Sidebar: section labels, research-focus keywords, profile links with icons
+// Sidebar: section labels, keywords, profile links with icons
 .profile-sidebar p > strong:only-child { color: var(--brand); }
 .focus-tags { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .6rem; }
+// Count of entries on the current page with this keyword (filled in by catalogue.js)
+.tag-count { margin-left: .35rem; opacity: .7; font-variant-numeric: tabular-nums; }
+.tag-count:empty { display: none; }
+.focus-tags [hidden] { display: none; }  // keywords with no entries on this page
 
 .profile-links a { display: inline-flex; align-items: center; color: var(--accent); }
 .profile-links a:hover { text-decoration: none; color: var(--ink); .pl-icon { color: var(--ink); } }

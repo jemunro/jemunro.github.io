@@ -107,24 +107,89 @@ local function description_html(e)
   return table.concat(out, "\n")
 end
 
-local function render_entry(prefix, e, title_url, meta_html, links)
+-- Author lists. The site owner is recognised by surname + first initial, both taken from the
+-- `name` variable in _variables.yml (e.g. "Jacob E Munro" -> surname "munro", initial "j"), so
+-- publisher variants such as "Jacob Munro" / "J. E. Munro" all match. Two-word surnames and
+-- other people with the same surname and initial are not distinguished.
+local function owner_key()
+  local v = quarto.variables.get("name")
+  local name = v and pandoc.utils.stringify(v) or ""
+  local words = {}
+  for w in name:gmatch("%S+") do words[#words + 1] = w end
+  if #words < 2 then return nil end
+  return { surname = words[#words]:lower(), initial = words[1]:sub(1, 1):lower() }
+end
+local OWNER, owner_loaded = nil, false  -- read lazily: variables are not available when the filter loads
+
+local function is_owner(author)
+  if not owner_loaded then OWNER, owner_loaded = owner_key(), true end
+  if not OWNER then return false end
+  local words = {}
+  for w in author:gmatch("%S+") do words[#words + 1] = w end
+  if #words < 2 then return false end
+  return words[#words]:lower() == OWNER.surname and words[1]:sub(1, 1):lower() == OWNER.initial
+end
+
+-- Returns the full list and the collapsed list as HTML. Collapsed: first author, last author
+-- and the owner (always, in bold), with "…" wherever authors are left out; lists of three or
+-- fewer are never shortened. The owner is bold in both.
+local function authors_html(authors)
+  local n = #authors
+  local function item(i)
+    local a = esc(authors[i])
+    return is_owner(authors[i]) and ("<strong>" .. a .. "</strong>") or a
+  end
+  local full, short, skipped = {}, {}, false
+  for i = 1, n do
+    full[#full + 1] = item(i)
+    if n <= 3 or i == 1 or i == n or is_owner(authors[i]) then
+      short[#short + 1] = item(i)
+      skipped = false
+    elseif not skipped then
+      short[#short + 1] = "…"
+      skipped = true
+    end
+  end
+  return table.concat(full, ", "), table.concat(short, ", ")
+end
+
+local function render_entry(prefix, e, title_url, meta_html, links, collapsible)
   local tags = {}
+  -- Role chips use the same data-tag mechanism as keywords, so catalogue.js filters on them too
+  for _, label in ipairs(e.role_chips or {}) do
+    tags[#tags + 1] = '<button type="button" class="tag tag-kw tag-role" data-tag="' .. esc(label) .. '">' .. esc(label) .. '</button>'
+  end
   for _, t in ipairs(e.tags) do
     tags[#tags + 1] = '<button type="button" class="tag tag-kw" data-tag="' .. esc(t) .. '">' .. esc(t) .. '</button>'
   end
   local lk = {}
   for _, l in ipairs(links) do lk[#lk + 1] = '<a href="' .. esc(l.url) .. '">' .. esc(l.label) .. '</a>' end
-  return table.concat({
-    string.format('<li class="entry%s" id="%s-%s" data-featured="%s" data-date="%s" data-title="%s">',
-      e.featured and " featured" or "", prefix, esc(e.id), tostring(e.featured), esc(e.sort), esc(e.title)),
-    '<div class="entry-title">' .. (e.featured and '<span class="tag tag-featured">Featured</span> ' or "")
-      .. '<a href="' .. esc(title_url) .. '">' .. esc(e.title) .. '</a></div>',
-    '<div class="entry-meta">' .. meta_html .. '</div>',
-    description_html(e),
-    '<div class="entry-foot"><span class="entry-tags">' .. table.concat(tags, " ") .. '</span>',
-    '<span class="entry-links">' .. table.concat(lk, " · ") .. '</span></div>',
-    '</li>',
-  }, "\n")
+  -- Collapsible (publication) cards: the title is plain text, because clicking it toggles the
+  -- card; the link to the paper is the venue in the meta line instead.
+  local title_text = collapsible and esc(e.title) or ('<a href="' .. esc(title_url) .. '">' .. esc(e.title) .. '</a>')
+  local title_html = '<div class="entry-title">' .. (e.featured and '<span class="tag tag-featured">Featured</span> ' or "")
+    .. title_text .. '</div>'
+  local meta_div = '<div class="entry-meta">' .. meta_html .. '</div>'
+  local foot = '<div class="entry-foot"><span class="entry-tags">' .. table.concat(tags, " ") .. '</span>'
+    .. '<span class="entry-links">' .. table.concat(lk, " · ") .. '</span></div>'
+  local open = string.format('<li class="entry%s%s" id="%s-%s" data-featured="%s" data-date="%s" data-title="%s">',
+    e.featured and " featured" or "", collapsible and " entry-collapsible" or "", prefix, esc(e.id),
+    tostring(e.featured), esc(e.sort), esc(e.title))
+  if collapsible then
+    -- Native <details>: starts collapsed, works without JavaScript. Title, authors, keywords and
+    -- links stay visible; only the description is folded away. The description stays in the
+    -- DOM, so search still finds it.
+    return table.concat({
+      open,
+      '<details class="entry-card">',
+      '<summary class="entry-summary"><span class="entry-head">' .. title_html .. meta_div .. '</span></summary>',
+      description_html(e),
+      '</details>',
+      foot,
+      '</li>',
+    }, "\n")
+  end
+  return table.concat({ open, title_html, meta_div, description_html(e), foot, '</li>' }, "\n")
 end
 
 local function doi_url(doi) return "https://doi.org/" .. doi end
@@ -166,21 +231,36 @@ local function build(kind)
     for _, p in ipairs(pubs) do
       if not p.exclude then
         local meta = {}
-        if #p.authors > 0 then meta[#meta + 1] = esc(table.concat(p.authors, ", ")) end
-        if p.date then meta[#meta + 1] = esc(p.date:sub(1, 4)) end
-        local venue = p.venue and (p.status == "preprint" and p.venue .. " preprint" or p.venue)
-          or (p.status == "preprint" and "Preprint" or nil)
-        if venue then meta[#meta + 1] = esc(venue) end
-        local mh = table.concat(meta, " · ")
-        for _, r in ipairs(p.roles) do
-          if ROLE_LABELS[r] then mh = mh .. ' <span class="tag tag-role">' .. ROLE_LABELS[r] .. '</span>' end
+        if #p.authors > 0 then
+          local full, short = authors_html(p.authors)
+          if full == short then
+            meta[#meta + 1] = '<span class="authors">' .. full .. '</span>'
+          else
+            -- collapsed card shows `short`, an open card shows `full` (CSS swaps them)
+            meta[#meta + 1] = '<span class="authors authors-short">' .. short .. '</span>'
+              .. '<span class="authors authors-full">' .. full .. '</span>'
+          end
         end
-        local links = { { label = p.venue or "DOI", url = doi_url(p.doi) } }
+        if p.date then meta[#meta + 1] = esc(p.date:sub(1, 4)) end
+        -- The venue (e.g. "arXiv preprint", "iScience") is the link to the paper; "DOI" if no venue
+        local venue = p.venue and (p.status == "preprint" and p.venue .. " preprint" or p.venue)
+          or (p.status == "preprint" and "Preprint" or "DOI")
+        meta[#meta + 1] = '<a class="entry-ext" href="' .. esc(doi_url(p.doi)) .. '">' .. esc(venue) .. '</a>'
+        -- Related software links sit right after the venue link
         for _, id in ipairs(p.related) do
           local s = sw_by[id]
-          if s and not s.exclude then links[#links + 1] = { label = "GitHub", url = s.github } end
+          if s and not s.exclude then
+            meta[#meta + 1] = '<a class="entry-ext" href="' .. esc(s.github) .. '">GitHub</a>'
+          end
         end
-        out[#out + 1] = render_entry("pub", p, doi_url(p.doi), mh, links)
+        local mh = table.concat(meta, " · ")
+        -- Authorship roles are shown as clickable chips at the start of the keyword row
+        p.role_chips = {}
+        for _, r in ipairs(p.roles) do
+          if ROLE_LABELS[r] then p.role_chips[#p.role_chips + 1] = ROLE_LABELS[r] end
+        end
+        -- All external links are in the meta line, so the foot row holds keywords only
+        out[#out + 1] = render_entry("pub", p, doi_url(p.doi), mh, {}, true)
       end
     end
   else

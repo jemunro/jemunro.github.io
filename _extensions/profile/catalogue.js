@@ -40,6 +40,23 @@
 
     var state = { q: "", tags: [], sort: "default" };
 
+    // Sidebar keyword chips (outside the list): show how many entries on this page carry each
+    // keyword, and act as the same filter as the keywords on the entries.
+    var sideChips = Array.prototype.slice.call(document.querySelectorAll(".focus-tags [data-tag]"));
+    // Chips with no entries on this page are hidden; the rest are ordered by count (highest
+    // first), keeping the vocabulary order (keywords.yml) between equal counts.
+    var counted = sideChips.map(function (b, i) {
+      var k = norm(b.getAttribute("data-tag"));
+      var n = items.filter(function (it) { return it.tags.indexOf(k) >= 0; }).length;
+      var c = b.querySelector(".tag-count");
+      if (c) c.textContent = n;
+      b.hidden = n === 0;
+      b.addEventListener("click", function () { toggle(k); });
+      return { b: b, n: n, i: i };
+    });
+    counted.sort(function (a, b) { return (b.n - a.n) || (a.i - b.i); });
+    counted.forEach(function (x) { x.b.parentNode.appendChild(x.b); });
+
     // ---- Toolbar ----
     var bar = el("div", "catalogue-bar");
     bar.setAttribute("role", "search");
@@ -111,7 +128,9 @@
         if (it.show) shown++;
       });
       // Keep each entry's own keyword buttons in step with the active filter
-      app.querySelectorAll(".catalogue [data-tag]").forEach(function (b) {
+      Array.prototype.concat.call(
+        Array.prototype.slice.call(app.querySelectorAll(".catalogue [data-tag]")), sideChips
+      ).forEach(function (b) {
         var on = state.tags.indexOf(norm(b.getAttribute("data-tag"))) >= 0;
         b.classList.toggle("active", on);
         b.setAttribute("aria-pressed", on ? "true" : "false");
@@ -134,6 +153,17 @@
     sort.addEventListener("change", function () { state.sort = sort.value; update(); });
     clear.addEventListener("click", reset);
     clear2.addEventListener("click", reset);
+    // A publication card toggles when clicked anywhere on it (the header already does, natively).
+    // Links, keyword buttons and the header itself keep their own behaviour, and selecting text
+    // does not toggle. Without JavaScript only the header toggles.
+    list.addEventListener("click", function (e) {
+      var card = e.target.closest && e.target.closest(".entry-collapsible");
+      if (!card || e.target.closest("a, button, summary")) return;
+      var sel = window.getSelection && window.getSelection();
+      if (sel && !sel.isCollapsed && card.contains(sel.anchorNode)) return;
+      var d = card.querySelector("details");
+      if (d) d.open = !d.open;
+    });
     // Clicking a keyword on an entry toggles that filter
     list.addEventListener("click", function (e) {
       var b = e.target.closest && e.target.closest("[data-tag]");

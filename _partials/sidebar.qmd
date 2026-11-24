@@ -1,9 +1,9 @@
 {{< var bio >}}
 
-**Research focus**
-
-{{< research-focus >}}
-
 **Profiles**
 
 {{< profile-links >}}
+
+**Keywords**
+
+{{< sidebar-keywords >}}

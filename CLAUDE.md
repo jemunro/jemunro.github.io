@@ -19,7 +19,7 @@ Build a minimal, maintainable personal academic portfolio using **Quarto**, deve
 - The **Publications** catalogue is the homepage; **Software** is the other main tab.
 - A compact full-width header displays name, qualifications, position and affiliation. Below it: sidebar on the left; on the right the Publications/Software tabs (current tab clearly marked, page titles not repeated as headings) above the content.
 - A persistent desktop sidebar contains a short bio and links to GitHub, ORCID, Google Scholar, an institutional profile, LinkedIn, email and CV; it adapts to mobile.
-- Catalogue entries use compact lists rather than large cards: title, relevant metadata, a 1–2 sentence description, shared keywords and external links.
+- Catalogue entries stay compact: title, relevant metadata, a 1–2 sentence description, shared keywords and external links. Publication entries are collapsible cards that start collapsed (description hidden; authors shortened to first, last and the site owner in bold, with "…" between); Software entries are plain compact entries.
 - Featured entries are manually pinned above regular entries. Regular entries are reverse chronological.
 - One controlled keyword vocabulary is shared across both catalogues.
 - Publications include preprints; manual exclusions are supported.

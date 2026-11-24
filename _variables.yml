@@ -12,8 +12,9 @@ bio: >-
 
 # Profile links. A link appears in the sidebar only if its key is present here.
 # Display order is fixed by the profile-links shortcode:
-#   github, orcid, scholar, wehi, linkedin, email, cv
+#   github, orcid, scholar, openalex, wehi, linkedin, email, cv
 # To add one later, just add the key, e.g.  wehi: "https://..."  (email: "name@example.org")
 github: "https://github.com/jemunro"
 orcid: "https://orcid.org/0000-0002-2751-0989"
 scholar: "https://scholar.google.com.au/citations?user=ijHcBjIAAAAJ&hl=en"
+openalex: "https://openalex.org/authors/a5072974680"

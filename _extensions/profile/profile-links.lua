@@ -5,6 +5,7 @@ local links = {
   { key = "github",   label = "GitHub",         icon = "bi bi-github" },
   { key = "orcid",    label = "ORCID",          icon = "pl-orcid" },
   { key = "scholar",  label = "Google Scholar", icon = "bi bi-mortarboard" },
+  { key = "openalex", label = "OpenAlex",       icon = "bi bi-graph-up" },
   { key = "wehi",     label = "WEHI profile",   icon = "bi bi-building" },
   { key = "linkedin", label = "LinkedIn",       icon = "bi bi-linkedin" },
   { key = "email",    label = "Email",          icon = "bi bi-envelope", prefix = "mailto:" },

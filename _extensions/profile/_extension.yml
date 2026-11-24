@@ -7,3 +7,4 @@ contributes:
     - profile-links.lua
     - site-tabs.lua
     - catalogue.lua
+    - metrics.lua

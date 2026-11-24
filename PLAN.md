@@ -66,6 +66,7 @@ Build a minimal Quarto/GitHub Pages portfolio with a **Publications** homepage a
 **Pass when:** Generated fields are clearly drafts; no unsupported claims are inserted; an edited approved entry cannot be overwritten.
 
 ## Stage 9 — OpenAlex citations (client-side)
+**Experiment (in progress):** author-level metrics (h-index, i10-index, citations per year) in the sidebar via `{{< metrics >}}`; per-entry citation counts below are not yet done.
 **Scope:** Browser JavaScript queries the OpenAlex API by DOI (batched, one request per page) and shows citation counts on entries. No cache, no JSON file and no build-time step; counts are always live. Optionally a "most cited" sort if cheap. Entries without a DOI or without an OpenAlex match show no count (never guessed). Citation data is never written into `content/`.
 
 **Pass when:** A sample of counts matches OpenAlex records; unmatched works and failed/blocked requests show no count and the page still works; the site is unaffected with JavaScript disabled. Note: OpenAlex is keyless and CORS-enabled; add its optional `mailto` parameter only with a generic, non-personal address supplied by the owner.

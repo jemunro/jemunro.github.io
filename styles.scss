@@ -24,10 +24,12 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
 }
 .profile-header-inner {
   padding: 0 3.5rem 0 1.5rem; // right space for the dark-mode toggle
+  display: flex; align-items: center; gap: .85rem;
   font-size: .85rem;
   color: var(--header-ink);
   h1 { font-size: 1.35rem; font-weight: 650; margin: 0 0 .1rem; color: var(--header-ink); }
   p  { margin: 0; color: color-mix(in srgb, var(--header-ink) 78%, transparent); }
+  .profile-photo { flex: none; width: 3.5rem; height: 3.5rem; border-radius: 50%; object-fit: cover; border: 2px solid var(--brand); }
 }
 
 // Page tabs, at the top of the main column
@@ -256,4 +258,22 @@ a:hover { text-decoration: underline; text-underline-offset: .15em; }
 }
 @media (max-width: 575.98px) {
   .site-tabs .catalogue-row.in-tabs { flex-basis: 100%; }
+}
+
+// Author metrics (OpenAlex, filled in by metrics.js; the block is hidden until data arrives)
+.author-metrics {
+  &[hidden] { display: none; }
+  margin-bottom: .6rem;
+  max-width: 14rem;  // keep the chart from stretching when the sidebar is full width (mobile)
+  .metrics-stats {
+    display: flex; gap: .9rem; margin: 0 0 .5rem;
+    > div { display: flex; flex-direction: column-reverse; }
+    dd { margin: 0; font-size: 1.15rem; font-weight: 600; line-height: 1.1; color: var(--ink); font-variant-numeric: tabular-nums; }
+    dt { font-size: .68rem; font-weight: 400; color: var(--muted); }
+  }
+  .metrics-chart { display: block; width: 100%; height: auto; }
+  .metrics-bar { fill: var(--brand); opacity: .85; }
+  .metrics-bar:hover { opacity: 1; }
+  .metrics-axis { display: flex; justify-content: space-between; font-size: .65rem; color: var(--muted); }
+  .metrics-source { display: inline-block; margin-top: .25rem; font-size: .68rem; color: var(--muted); }
 }

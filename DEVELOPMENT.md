@@ -7,7 +7,11 @@
 ## Updating profile details
 All profile text lives in [`_variables.yml`](_variables.yml): name, qualifications, position, affiliation, sidebar keywords, bio and profile links. Pages use `{{< var ... >}}`; never retype these values in `.qmd` files.
 
+**Header photo:** `photo` in `_variables.yml` points to an image under `images/` (shown as a circle beside the name). To change the photo, replace the file (or point `photo` at another image); the header expects the key to be present.
+
 **Profile links** are rendered by the `profile-links` shortcode ([`_extensions/profile/`](_extensions/profile/profile-links.lua)). A link shows only if its key exists in `_variables.yml`. Supported keys, in display order: `github`, `orcid`, `scholar`, `openalex`, `wehi`, `linkedin`, `email` (plain address; `mailto:` is added), `cv`. Delete a key to hide the link.
+
+**Author metrics** (h-index, i10-index, total citations and a chart of citations per year over the last 10 years) sit under the profile links, rendered by the `metrics` shortcode (`_extensions/profile/metrics.lua` + `metrics.js`). They are fetched live in the browser from the OpenAlex author API using the ID in the `openalex` profile link; nothing is cached or written to `content/`. If the link is missing, JavaScript is off or the request fails, the block stays hidden. The current year is partial, so its bar is still growing.
 
 ## Structure
 - `_quarto.yml` — light/dark themes, render scope. (Quarto navbar is not used: the top bar is `_partials/header.qmd`; tabs come from the `site-tabs` shortcode in `_extensions/profile/site-tabs.lua` — add a line there for a new page.)

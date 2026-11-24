@@ -1,9 +1,15 @@
 ::: {.profile-header}
 ::: {.profile-header-inner}
 ```{=html}
+<img class="profile-photo" src="{{< var photo >}}" alt="Photo of {{< var name >}}" width="56" height="56">
+```
+
+::: {.profile-header-text}
+```{=html}
 <h1>{{< var name >}}</h1>
 ```
 
 {{< var qualifications >}} · {{< var position >}}, {{< var affiliation >}}
+:::
 :::
 :::

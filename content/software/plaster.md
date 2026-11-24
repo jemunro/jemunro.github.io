@@ -5,7 +5,7 @@ github: https://github.com/bahlolab/PLASTER
 
 featured: false
 date: 2022-02-25
-tags: [Long-read sequencing, Amplicon sequencing, Pharmacogenomics, Computational genomics, Methods development, Nextflow, R]
+tags: [Long-read sequencing, Amplicon sequencing, Pharmacogenomics, Methods development, Nextflow, R]
 related-publications: [cyp2d6-plaster]
 exclude: false
 ---

@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: []
-tags: [Cardiovascular genetics, Whole-genome sequencing, Rare diseases]
+tags: [Cardiovascular genetics, Clinical genomics, Whole-genome sequencing, Rare diseases]
 exclude: false
 ---
 

@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: []
-tags: [RNA editing, Single-cell, Neurological disorders, Computational genomics]
+tags: [Transcriptomics, RNA editing, Single-cell, Neurological disorders, Computational genomics]
 exclude: false
 ---
 

@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: [coauthor]
-tags: [Rare diseases, Epilepsy, Population genetics]
+tags: [Rare diseases, Epilepsy, Neurological disorders, Population genetics]
 exclude: false
 ---
 

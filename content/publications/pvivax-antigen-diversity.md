@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: [coauthor]
-tags: [Malaria, Vaccine antigens, Population genetics, Computational genomics]
+tags: [Malaria, Infectious diseases, Vaccine antigens, Population genetics, Computational genomics]
 exclude: false
 ---
 

@@ -173,3 +173,6 @@ Record milestone completion dates, decisions and relevant caveats here as the pr
 
 ### 2026-11-24 — Stage 8: remaining papers drafted
 - The 14 remaining ORCID works (2013–2024) now have draft entries; the matcher reports 26 matched, 0 new. Authors and dates come from Crossref and Europe PMC; descriptions are written from the abstracts (one article has no abstract, so its description is deliberately minimal). Authorship role `first` was set only where the owner is clearly first author. No new keywords were added to the vocabulary. Descriptions, tags and roles await the owner's review.
+
+### 2026-11-24 — Stage 8: tag review
+- Tags reviewed across both catalogues. "Computational genomics" was on nearly every entry alongside "Methods development", so it was removed wherever both appeared. Added keywords: Infectious diseases, Clinical genomics, Transcriptomics, Bioremediation; "Neurological disorders" was applied to the epilepsy entries. Every keyword in `content/keywords.yml` is now used at least once. Which entries received them is a judgement call for the owner to review.

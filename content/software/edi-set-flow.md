@@ -5,7 +5,7 @@ github: https://github.com/bahlolab/Edi-Set-Flow
 
 featured: false
 date: 2026-11-03
-tags: [RNA editing, Computational genomics, Methods development, Nextflow, R]
+tags: [Transcriptomics, RNA editing, Methods development, Nextflow, R]
 related-publications: [edi-set-flow]
 exclude: false
 ---

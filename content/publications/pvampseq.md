@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: [coauthor]
-tags: [Malaria, Amplicon sequencing, Population genetics, Methods development, R]
+tags: [Malaria, Infectious diseases, Amplicon sequencing, Population genetics, Methods development, R]
 exclude: false
 ---
 

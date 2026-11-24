@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: []
-tags: [Rare diseases, Whole-genome sequencing]
+tags: [Rare diseases, Clinical genomics, Whole-genome sequencing]
 exclude: false
 ---
 

@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: [first]
-tags: [Environmental microbiology]
+tags: [Environmental microbiology, Bioremediation]
 exclude: false
 ---
 

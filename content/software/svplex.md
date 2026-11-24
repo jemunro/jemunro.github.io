@@ -5,7 +5,7 @@ github: https://github.com/bahlolab/SVPLEX
 
 featured: true
 date: 2026-08                    # ordering only (newest first); set to the associated paper's date, not a verified release date
-tags: [Structural variants, Whole-genome sequencing, Nextflow, Computational genomics, Methods development]
+tags: [Structural variants, Whole-genome sequencing, Nextflow, Methods development]
 related-publications: [svplex]   # IDs in content/publications/
 exclude: false
 ---

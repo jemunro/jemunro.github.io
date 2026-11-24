@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: []
-tags: [Malaria, Amplicon sequencing, Computational genomics, Methods development, R]
+tags: [Malaria, Infectious diseases, Amplicon sequencing, Methods development, R]
 exclude: false
 ---
 

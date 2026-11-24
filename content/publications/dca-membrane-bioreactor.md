@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: [first]
-tags: [Environmental microbiology, Amplicon sequencing]
+tags: [Environmental microbiology, Bioremediation, Amplicon sequencing]
 exclude: false
 ---
 

@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: [coauthor]
-tags: [Tuberculosis, Medical imaging]
+tags: [Tuberculosis, Infectious diseases, Medical imaging]
 exclude: false
 ---
 

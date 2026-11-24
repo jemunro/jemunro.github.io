@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: []
-tags: [Cardiovascular genetics, Variant prioritisation]
+tags: [Cardiovascular genetics, Clinical genomics, Variant prioritisation]
 exclude: false
 ---
 

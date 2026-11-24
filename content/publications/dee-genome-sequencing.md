@@ -9,7 +9,7 @@ status: preprint
 
 featured: false
 roles: [first]
-tags: [Rare diseases, Epilepsy, Whole-genome sequencing, Structural variants, Computational genomics]
+tags: [Rare diseases, Epilepsy, Clinical genomics, Neurological disorders, Whole-genome sequencing, Structural variants, Computational genomics]
 exclude: false
 ---
 

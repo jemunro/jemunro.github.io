@@ -9,7 +9,7 @@ status: preprint
 
 featured: false
 roles: [first]
-tags: [Rare diseases, Epilepsy, Structural variants]
+tags: [Rare diseases, Epilepsy, Neurological disorders, Structural variants]
 exclude: false
 ---
 

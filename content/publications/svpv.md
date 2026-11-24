@@ -9,7 +9,7 @@ status: published
 
 featured: true
 roles: [first]
-tags: [Structural variants, Whole-genome sequencing, Computational genomics, Methods development, R, Python]
+tags: [Structural variants, Whole-genome sequencing, Methods development, R, Python]
 related-software: [svpv]
 exclude: false
 ---

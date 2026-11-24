@@ -9,7 +9,7 @@ status: published
 
 featured: true
 roles: [first]
-tags: [Tuberculosis, Whole-genome sequencing, Computational genomics, Methods development, R, Nextflow]
+tags: [Tuberculosis, Infectious diseases, Whole-genome sequencing, Methods development, R, Nextflow]
 related-software: [tbtyper]
 exclude: false
 ---

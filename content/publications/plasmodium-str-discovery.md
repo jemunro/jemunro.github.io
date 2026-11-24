@@ -9,7 +9,7 @@ status: published
 
 featured: false
 roles: []
-tags: [Malaria, Population genetics, Computational genomics, Methods development]
+tags: [Malaria, Infectious diseases, Population genetics, Methods development]
 exclude: false
 ---
 

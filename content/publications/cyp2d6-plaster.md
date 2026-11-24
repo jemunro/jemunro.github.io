@@ -9,7 +9,7 @@ status: published
 
 featured: true
 roles: [first]
-tags: [Pharmacogenomics, Long-read sequencing, Amplicon sequencing, Population genetics, Methods development]
+tags: [Pharmacogenomics, Long-read sequencing, Amplicon sequencing, Population genetics, Methods development, R]
 related-software: [plaster]
 exclude: false
 ---

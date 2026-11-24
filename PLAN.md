@@ -15,7 +15,7 @@ Build a minimal Quarto/GitHub Pages portfolio with a **Publications** homepage a
 | 5 | GitHub Pages deployment | Complete |
 | 6 | Manual ORCID publication import | Complete |
 | 7 | Identity matching, preprint relationships and exclusions | Complete |
-| 8 | AI-assisted draft descriptions and tags | In progress (first batch awaiting review) |
+| 8 | AI-assisted draft descriptions and tags | In progress (all ORCID papers drafted; awaiting owner review) |
 | 9 | Client-side OpenAlex citation counts | Not started |
 | 10 | Curated GitHub repository metadata import | Not started |
 | 11 | Agent-assisted new-publication branch workflow | Not started |
@@ -170,3 +170,6 @@ Record milestone completion dates, decisions and relevant caveats here as the pr
 - Software cards now behave like paper cards: plain-text title, meta line holding the GitHub link and the related paper's venue link, keywords below, description folded away, whole-card hover and click. CLAUDE.md design note updated. A shared `venue_label` helper in `catalogue.lua` labels paper links on both pages.
 - Verified: both pages render (12 paper cards, 6 software cards); every paper with software shows its GitHub link and every software card links to its paper; the matcher reports the new papers as matched; site validator and tests pass. Not verified in a real browser. The owner confirmed co-first authorship on the one paper where they are second author; three of the new papers are featured.
 - Presentation change (owner's request): the "Featured" badge was removed. Featured entries are identified only by the gold rule down the left side and by sitting above regular entries; `featured` ordering and the `featured: true` field are unchanged.
+
+### 2026-11-24 — Stage 8: remaining papers drafted
+- The 14 remaining ORCID works (2013–2024) now have draft entries; the matcher reports 26 matched, 0 new. Authors and dates come from Crossref and Europe PMC; descriptions are written from the abstracts (one article has no abstract, so its description is deliberately minimal). Authorship role `first` was set only where the owner is clearly first author. No new keywords were added to the vocabulary. Descriptions, tags and roles await the owner's review.

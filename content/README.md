@@ -25,7 +25,7 @@ Planned separation: future importers write to a separate generated location (e.g
 | `date` | no | `YYYY`, `YYYY-MM` or `YYYY-MM-DD`. Only the year is displayed; the full value orders entries (a missing month/day sorts as the latest of that period). |
 | `venue` | no | Journal or server (e.g. `bioRxiv`); shown on the card as the link to the paper (via the DOI), e.g. "bioRxiv preprint" or "iScience". |
 | `status` | no | `preprint` (adds "preprint" after the venue) or `published` (default). |
-| `featured` | no | `true` pins the entry above regular entries and adds the gold marker. |
+| `featured` | no | `true` pins the entry above regular entries and gives it a gold rule down its left side (no badge). |
 | `roles` | no | List from `first`, `senior`, `corresponding`, `coauthor`. `first`/`senior`/`corresponding` show as a gold chip at the start of the keyword row, clickable like a keyword (several may apply); `coauthor` is the default and shows none. Subject to human review. |
 | `tags` | no | Keyword list. Use the shared vocabulary (spelling must match the other entries). |
 | `related-software` | no | List of software `id`s. Each adds a GitHub link taken from that software entry. |

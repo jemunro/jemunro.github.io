@@ -180,12 +180,8 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
   color: var(--soft-ink);
   vertical-align: .08em;
 }
-// Authorship role chips (clickable, in the keyword row): same gold as the Featured badge
+// Authorship role chips (clickable, in the keyword row): gold, like the featured entries' left rule
 .tag-role { color: var(--warm-ink); background: color-mix(in srgb, var(--warm) 18%, transparent); }
-.tag-featured {
-  color: var(--warm-ink); background: color-mix(in srgb, var(--warm) 18%, transparent);
-  text-transform: uppercase; letter-spacing: .05em; font-size: .62rem; font-weight: 600;
-}
 .entry-meta .tag { margin-left: .3rem; }
 
 // Clickable keywords and their active state
@@ -194,7 +190,7 @@ button.tag-kw {
   &:hover { background: color-mix(in srgb, var(--accent) 22%, var(--soft)); }
   &:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
   &.active { background: var(--brand); color: var(--bs-body-bg); }
-  // Role chips keep the Featured gold for hover and active
+  // Role chips keep the gold for hover and active
   &.tag-role:hover { background: color-mix(in srgb, var(--warm) 32%, transparent); }
   &.tag-role.active { background: var(--warm); color: var(--bs-body-bg); }
 }

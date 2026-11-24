@@ -167,8 +167,8 @@ local function render_entry(prefix, e, title_url, meta_html, links, collapsible)
   -- Collapsible (publication) cards: the title is plain text, because clicking it toggles the
   -- card; the link to the paper is the venue in the meta line instead.
   local title_text = collapsible and esc(e.title) or ('<a href="' .. esc(title_url) .. '">' .. esc(e.title) .. '</a>')
-  local title_html = '<div class="entry-title">' .. (e.featured and '<span class="tag tag-featured">Featured</span> ' or "")
-    .. title_text .. '</div>'
+  -- Featured entries have no badge: they sit at the top with a gold rule down the left side
+  local title_html = '<div class="entry-title">' .. title_text .. '</div>'
   local meta_div = '<div class="entry-meta">' .. meta_html .. '</div>'
   local foot = '<div class="entry-foot"><span class="entry-tags">' .. table.concat(tags, " ") .. '</span>'
     .. '<span class="entry-links">' .. table.concat(lk, " · ") .. '</span></div>'

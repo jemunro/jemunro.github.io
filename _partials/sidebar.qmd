@@ -4,6 +4,8 @@
 
 {{< profile-links >}}
 
+{{< metrics >}}
+
 **Keywords**
 
 {{< sidebar-keywords >}}

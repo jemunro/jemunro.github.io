@@ -1,6 +1,8 @@
 project:
   type: website
   # Render only .qmd pages (README.md/CLAUDE.md/PLAN.md are repository docs, not site pages).
+  resources:
+    - images/
   render:
     - "*.qmd"
 

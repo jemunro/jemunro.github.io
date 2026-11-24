@@ -84,7 +84,7 @@ local function by_id(entries)
 end
 
 -- Default order (also the no-JavaScript order): featured first, then newest first when by_date
--- (publications) or alphabetical (software). catalogue.js can re-sort on request; authorship
+-- (both catalogues; software takes its related paper's date). catalogue.js can re-sort on request; authorship
 -- roles never affect order.
 local function sort_entries(entries, by_date)
   table.sort(entries, function(a, b)
@@ -229,6 +229,14 @@ local function build(kind)
     for _, id in ipairs(s.related) do
       if not pub_by[id] then quarto.log.warning(s.file .. ": related-publications '" .. id .. "' not found") end
     end
+    -- Software is not featured. Its date is that of its newest related publication (its own
+    -- `date`, if any, is only a fallback), so the catalogue follows the papers.
+    s.featured = false
+    for _, id in ipairs(s.related) do
+      local p = pub_by[id]
+      if p and p.date and (not s.paper_date or date_key(p.date) > date_key(s.paper_date)) then s.paper_date = p.date end
+    end
+    if s.paper_date then s.date, s.sort = s.paper_date, date_key(s.paper_date) end
   end
 
   local out = {}
@@ -268,7 +276,7 @@ local function build(kind)
       end
     end
   else
-    sort_entries(sws, false)
+    sort_entries(sws, true)
     for _, s in ipairs(sws) do
       if not s.exclude then
         -- Same card as a publication: plain-text title, links in the meta line (the repository,

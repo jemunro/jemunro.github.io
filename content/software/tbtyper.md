@@ -2,9 +2,6 @@
 id: tbtyper
 title: TBtypeR
 github: https://github.com/bahlolab/TBtypeR
-
-featured: false
-date: 2025-02-19
 tags: [Tuberculosis, Infectious diseases, Whole-genome sequencing, Methods development, R, Nextflow]
 related-publications: [tbtyper]
 exclude: false

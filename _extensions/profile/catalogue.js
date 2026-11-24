@@ -9,8 +9,8 @@
       ["default", "Featured first, then newest"], ["newest", "Newest first"],
       ["oldest", "Oldest first"], ["title", "Title A–Z"]],
     software: [
-      ["default", "Featured first, then A–Z"], ["title", "A–Z"],
-      ["title-desc", "Z–A"], ["newest", "Newest first"]],
+      ["default", "Newest paper first"], ["oldest", "Oldest paper first"],
+      ["title", "A–Z"], ["title-desc", "Z–A"]],
   };
 
   function el(tag, cls, text) {
@@ -110,7 +110,7 @@
         case "title-desc": return -t;
         default:
           if (a.featured !== b.featured) return a.featured ? -1 : 1;
-          if (kind === "publications" && a.date !== b.date) return a.date < b.date ? 1 : -1;
+          if (a.date !== b.date) return a.date < b.date ? 1 : -1;
           return t;
       }
     }

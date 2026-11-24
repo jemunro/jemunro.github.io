@@ -37,11 +37,11 @@ Planned separation: future importers write to a separate generated location (e.g
 | `id` | yes | Stable internal ID, unique within software. |
 | `title` | yes | Display name. |
 | `github` | yes | Repository URL (the "GitHub" link in the card's meta line). |
-| `date` | no | Used for ordering only (newest first). Not displayed. |
-| `featured`, `tags`, `exclude` | no | As for publications. |
+| `tags`, `exclude` | no | As for publications. Software is never featured. |
+| `date` | no | Fallback ordering date, used only when no related publication has a date. Normally omitted: software takes the date of its newest related publication. Not displayed. |
 | `related-publications` | no | List of publication `id`s. Each adds a link to that paper (labelled with its venue). |
 
-Order: featured entries first, then publications newest `date` first and software alphabetically. Visitors can also search, filter by keyword and re-sort in the browser; keywords are derived from the `tags` of the entries (matched case-insensitively), so there is no separate keyword list.
+Order: featured publications first, then publications newest `date` first. Software is ordered by the date of its related publication (newest first), with no featured entries. Visitors can also search, filter by keyword and re-sort in the browser; keywords are derived from the `tags` of the entries (matched case-insensitively), so there is no separate keyword list.
 
 ## Example: add a publication
 Create `content/publications/my-paper.md`:

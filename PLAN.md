@@ -176,3 +176,6 @@ Record milestone completion dates, decisions and relevant caveats here as the pr
 
 ### 2026-11-24 — Stage 8: tag review
 - Tags reviewed across both catalogues. "Computational genomics" was on nearly every entry alongside "Methods development", so it was removed wherever both appeared. Added keywords: Infectious diseases, Clinical genomics, Transcriptomics, Bioremediation; "Neurological disorders" was applied to the epilepsy entries. Every keyword in `content/keywords.yml` is now used at least once. Which entries received them is a judgement call for the owner to review.
+
+### 2026-11-24 — Software ordering
+- Software entries are no longer featured (flag removed from all entries and ignored by the catalogue). Software takes the date of its newest related publication and is ordered newest first by default; the browser sort offers newest/oldest paper and A–Z/Z–A. The software `date` field is now only a fallback. Supersedes the earlier "software A–Z by default" and software-featured notes. Not verified in a real browser.

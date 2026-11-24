@@ -2,9 +2,6 @@
 id: nf-cavalier
 title: nf-cavalier
 github: https://github.com/bahlolab/nf-cavalier
-
-featured: true
-date: 2026-08-06
 tags: [Rare diseases, Clinical genomics, Variant prioritisation, Nextflow, Methods development, R]
 related-publications: [nf-cavalier]
 exclude: false

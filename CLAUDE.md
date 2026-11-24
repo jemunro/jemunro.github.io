@@ -20,7 +20,7 @@ Build a minimal, maintainable personal academic portfolio using **Quarto**, deve
 - A compact full-width header displays name, qualifications, position and affiliation. Below it: sidebar on the left; on the right the Publications/Software tabs (current tab clearly marked, page titles not repeated as headings) above the content.
 - A persistent desktop sidebar contains a short bio and links to GitHub, ORCID, Google Scholar, an institutional profile, LinkedIn, email and CV; it adapts to mobile.
 - Catalogue entries stay compact: title, relevant metadata, a 1–2 sentence description, shared keywords and external links. Publication and Software entries are collapsible cards that start collapsed (description hidden; for publications, authors shortened to first, last and the site owner in bold, with "…" between). Titles are plain text; external links (the paper by venue, GitHub) sit in the meta line.
-- Featured entries are manually pinned above regular entries. Regular entries are reverse chronological.
+- Featured publications are manually pinned above regular publications, which are reverse chronological. Software has no featured entries and is ordered by its related publication's date, newest first.
 - One controlled keyword vocabulary is shared across both catalogues.
 - Publications include preprints; manual exclusions are supported.
 - Authorship roles (first, senior and corresponding where appropriate) are separate from research-topic keywords and subject to human review.

@@ -2,9 +2,6 @@
 id: svpv
 title: SVPV
 github: https://github.com/VCCRI/SVPV
-
-featured: false
-date: 2017-07-01
 tags: [Structural variants, Whole-genome sequencing, Methods development, R, Python]
 related-publications: [svpv]
 exclude: false

@@ -13,4 +13,4 @@ tags: [Rare diseases, Genome-wide association]
 exclude: false
 ---
 
-A genome-wide association study of 1,067 MacTel patients and 3,799 controls identifies eight new loci and prioritises 48 genes. Mendelian randomisation points to a causal role for serine and glycine depletion in this retinal disease.
+Uses a genome-wide association study of 1,067 people with macular telangiectasia type 2 and 3,799 controls to identify eight new risk loci and prioritise candidate genes. Genetic and metabolic analyses strengthen evidence that disrupted serine–glycine metabolism contributes to disease risk.

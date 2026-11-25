@@ -7,4 +7,4 @@ related-publications: [tbtyper]
 exclude: false
 ---
 
-R package for quantifying Mycobacterium tuberculosis strain mixtures from whole-genome sequencing data, detecting low-frequency mixed infections down to 1%. It is also available in the end-to-end TBtypeNF Nextflow pipeline.
+R package for sensitive detection and sublineage assignment of mixed *Mycobacterium tuberculosis* complex infections from whole-genome sequencing. Uses phylogenetic SNP markers to identify minor strains, with an associated TBtypeNF Nextflow workflow for end-to-end analysis.

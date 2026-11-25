@@ -1,6 +1,6 @@
 ---
 id: pvivax-antigen-diversity
-title: "Extreme Genetic Diversity and Signatures of Balancing Selection in Plasmodium vivax Blood-Stage Antigens"
+title: "Extreme Genetic Diversity and Signatures of Balancing Selection in *Plasmodium vivax* Blood-Stage Antigens"
 doi: 10.1093/infdis/jiaf539
 authors: ["Alison Paolo N Bareng","Myo T Naung","Eli Martin","Somya Mehra","Jacob E Munro","Shannon Takala Harrison","Alyssa E Barry"]
 date: 2026-03-01
@@ -13,4 +13,4 @@ tags: [Malaria, Infectious diseases, Vaccine antigens, Population genetics, Comp
 exclude: false
 ---
 
-Characterises genetic diversity and balancing selection in 14 Plasmodium vivax vaccine candidate antigens using 289 public whole-genome sequences from Asia, the Americas and Oceania. AMA1, CyRPA, RBP1a and P41 show high diversity and signatures of immune selection, and the Sal-1 vaccine strain sequences are extremely rare worldwide.
+Examines genetic diversity in 14 *Plasmodium vivax* blood-stage vaccine candidate antigens using 289 publicly available genomes. Several antigens show extensive diversity and evidence of balancing selection, highlighting challenges for vaccines based on a limited set of reference haplotypes.

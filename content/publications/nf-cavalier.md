@@ -14,4 +14,4 @@ related-software: [nf-cavalier]
 exclude: false
 ---
 
-nf-cavalier is a Nextflow pipeline for prioritising candidate disease-causing variants in rare disease genomic datasets. It integrates variant annotation, phenotype-informed filtering and segregation analysis, producing interactive HTML reports and presentation-ready summaries.
+Introduces nf-cavalier, a reproducible Nextflow workflow for annotating, filtering and prioritising candidate variants in rare disease sequencing datasets. It combines gene and phenotype-based prioritisation with family information and produces interactive HTML reports and presentation-ready slide decks to support variant review.

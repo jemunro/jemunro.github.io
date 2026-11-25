@@ -14,4 +14,4 @@ related-software: [svpv]
 exclude: false
 ---
 
-Presents SVPV, a viewer that summarises the paired-end whole-genome sequencing features behind structural variant predictions so that calls from several algorithms can be compared. It can add population allele frequencies and gene annotation, and runs in a GUI mode for single variants or in batch mode.
+Introduces SVPV, a tool for visualising read-level evidence supporting structural variant predictions from paired-end sequencing. It helps compare calls across detection algorithms and examine breakpoint support, with options for gene annotation, population frequencies and batch-generated visualisations.

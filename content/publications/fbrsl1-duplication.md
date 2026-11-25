@@ -1,6 +1,6 @@
 ---
 id: fbrsl1-duplication
-title: "A complex duplication overlapping FBRSL1 implicated in a developmental and epileptic encephalopathy"
+title: "A complex duplication overlapping *FBRSL1* implicated in a developmental and epileptic encephalopathy"
 doi: 10.64898/2026.03.30.26349353
 authors: ["Lital Cohen-Vig","Jacob E Munro","Joshua Reid","Tom Witkowski","Neblina Sikta","Dror Kraus","Mark F Bennett","Ingrid E Scheffer","Michael S Hildebrand","Melanie Bahlo","Samuel F Berkovic"]
 date: 2026-04-04
@@ -13,4 +13,4 @@ tags: [Rare diseases, Epilepsy, Neurological disorders, Structural variants]
 exclude: false
 ---
 
-Reports an infant with a profound developmental and epileptic encephalopathy and a complex structural variant that creates an additional, partially truncated copy of FBRSL1. It is the first complex structural variant reported at this locus and supports a dominant-negative mechanism.
+Describes a complex duplication involving *FBRSL1* in an infant with severe developmental and epileptic encephalopathy. Genomic and RNA evidence supports production of an altered FBRSL1 transcript and a possible dominant-negative disease mechanism, extending the range of pathogenic structural variation at this locus.

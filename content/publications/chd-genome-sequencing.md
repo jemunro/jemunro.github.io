@@ -13,4 +13,4 @@ tags: [Cardiovascular genetics, Clinical genomics, Whole-genome sequencing, Rare
 exclude: false
 ---
 
-Genome sequencing of 97 families with a child born with congenital heart disease, analysed with a two-tiered approach. A clinically actionable variant was found in 31% of families.
+Applies genome sequencing and a two-tiered variant interpretation strategy to 97 families affected by congenital heart disease. Clinically actionable variants were identified in 31% of families, illustrating the value of combining targeted disease-gene analysis with broader genomic investigation.

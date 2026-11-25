@@ -13,4 +13,4 @@ tags: [Environmental microbiology, Bioremediation]
 exclude: false
 ---
 
-Uses quantitative PCR to survey dehalogenating bacteria in 1,2-dichloroethane-contaminated groundwater at a site in Sydney. Genes for both aerobic and anaerobic degradation were found together, indicating potential for natural attenuation or bioremediation.
+Surveys microbial genes associated with aerobic and anaerobic 1,2-dichloroethane degradation in contaminated groundwater using quantitative PCR. Detection of both degradation pathways at the same site suggests the potential for complementary microbial processes in contaminant attenuation.

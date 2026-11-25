@@ -14,4 +14,4 @@ related-software: [ampseqr]
 exclude: false
 ---
 
-Presents AmpSeqR, an R package for processing deep short-read amplicon sequencing data with a focus on infectious diseases. It filters reads to remove PCR and sequencing noise and supports downstream analysis such as detecting minor clones in mixed samples.
+Introduces AmpSeqR, an R package for processing deep short-read amplicon sequencing data, particularly for infectious disease research. It supports sequence cleaning, error filtering and amplicon sequence variant analysis to improve the identification of true haplotypes and low-frequency strains in mixed samples.

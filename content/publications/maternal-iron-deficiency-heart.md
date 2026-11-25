@@ -13,4 +13,4 @@ tags: [Cardiovascular genetics]
 exclude: false
 ---
 
-Identifies maternal iron deficiency as a potential teratogen causing congenital heart defects in mouse offspring, likely through increased retinoic acid signalling. The defects can be prevented by iron administration in early pregnancy.
+Shows that maternal iron deficiency disrupts embryonic cardiovascular development in mice, producing congenital heart defects associated with altered retinoic acid signalling. Early iron supplementation prevents these abnormalities in the experimental model, identifying maternal iron status as an important developmental factor.

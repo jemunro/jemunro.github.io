@@ -19,7 +19,7 @@ Planned separation: future importers write to a separate generated location (e.g
 | Field | Required | Meaning |
 |---|---|---|
 | `id` | yes | Stable internal ID, unique within publications. Never change it after the entry exists; other files refer to it. |
-| `title` | yes | Title (quote it if it contains `:`). |
+| `title` | yes | Title (quote it if it contains `:`). Wrap gene and species names in `*asterisks*` to italicise them; other markup is ignored, and search/sorting use the plain text. |
 | `doi` | yes | DOI without the `https://doi.org/` prefix. The title and venue link use it. |
 | `authors` | no | List of names, shown as given. A collapsed card shows the first author, the last author and the site owner (bold) with "…" for omitted authors; lists of three or fewer are shown in full, and an open card shows everyone. The owner is recognised by surname and first initial of `name` in `_variables.yml`, so "Jacob Munro", "J. E. Munro" etc. all match. |
 | `date` | no | `YYYY`, `YYYY-MM` or `YYYY-MM-DD`. Only the year is displayed; the full value orders entries (a missing month/day sorts as the latest of that period). |

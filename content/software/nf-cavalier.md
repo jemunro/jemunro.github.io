@@ -7,4 +7,4 @@ related-publications: [nf-cavalier]
 exclude: false
 ---
 
-Rare disease variant annotation, prioritisation and reporting, with support for singleton, family and cohort analyses.
+Nextflow workflow for annotation, phenotype-informed prioritisation and reporting of rare disease variants from genome or exome sequencing. Produces interactive HTML reports and PowerPoint summaries to facilitate review of candidate variants in individual and family datasets.

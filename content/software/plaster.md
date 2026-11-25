@@ -7,4 +7,4 @@ related-publications: [cyp2d6-plaster]
 exclude: false
 ---
 
-Nextflow pipeline for allele typing from PacBio SMRT long amplicon sequencing data. It takes PacBio subreads and produces phased BAMs and VCF variant calls for each sample amplicon, with support for pharmacogenomic star allele assignment.
+Pipeline for high-resolution haplotype and allele typing from PacBio long-read amplicon sequencing data. Processes sequencing reads into sample-level alignments and variant calls, supporting complex loci such as *CYP2D6* and downstream pharmacogenomic allele interpretation.

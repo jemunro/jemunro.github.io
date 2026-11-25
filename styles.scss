@@ -37,9 +37,9 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
 .site-tabs .nav-link { padding: .4rem 1rem; font-size: .9rem; color: var(--muted); }
 .site-tabs .nav-link.active { font-weight: 600; color: var(--ink); }
 
-// Two-column layout: sticky sidebar on desktop, stacked on narrow screens
+// Two-column layout: sidebar beside the content on desktop, stacked on narrow screens
 .profile-layout {
-  margin: 1.25rem 0 3rem;
+  margin: 0 0 3rem;
   padding: 0 1.5rem;
   display: grid;
   grid-template-columns: 1fr;
@@ -64,13 +64,9 @@ body { font-size: .94rem; line-height: 1.5; -webkit-font-smoothing: antialiased;
 }
 
 @media (min-width: 992px) {
-  .profile-layout { grid-template-columns: 230px 1fr; gap: 2.25rem; }
+  .profile-layout { grid-template-columns: 276px 1fr; gap: 2.25rem; }
   .profile-sidebar {
-    position: sticky;
-    top: 1.5rem;
-    align-self: start;
-    // The keyword list can be long: scroll inside the sidebar rather than being cut off
-    max-height: calc(100vh - 3rem); overflow-y: auto;
+    // Scrolls with the page (no sticky/inner scroll), so there is a single scrollbar
     border-bottom: 0;
     padding-bottom: 0;
     padding-right: 1.5rem;
@@ -264,7 +260,7 @@ a:hover { text-decoration: underline; text-underline-offset: .15em; }
 .author-metrics {
   &[hidden] { display: none; }
   margin-bottom: .6rem;
-  max-width: 14rem;  // keep the chart from stretching when the sidebar is full width (mobile)
+  max-width: 16rem;  // keep the chart from stretching when the sidebar is full width (mobile)
   .metrics-stats {
     display: flex; gap: .9rem; margin: 0 0 .5rem;
     > div { display: flex; flex-direction: column-reverse; }

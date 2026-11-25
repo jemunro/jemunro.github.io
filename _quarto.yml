@@ -3,6 +3,7 @@ project:
   # Render only .qmd pages (README.md/CLAUDE.md/PLAN.md are repository docs, not site pages).
   resources:
     - images/
+    - google53c52652d518822c.html  # Google Search Console ownership verification
   render:
     - "*.qmd"
 

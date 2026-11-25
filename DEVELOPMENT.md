@@ -16,7 +16,7 @@ All profile text lives in [`_variables.yml`](_variables.yml): name, qualificatio
 ## Structure
 - `_quarto.yml` — light/dark themes, render scope. (Quarto navbar is not used: the top bar is `_partials/header.qmd`; tabs come from the `site-tabs` shortcode in `_extensions/profile/site-tabs.lua` — add a line there for a new page.)
 - `_partials/header.qmd`, `_partials/sidebar.qmd` — shared header and sidebar, included by each page.
-- `styles.scss` — layout (sticky sidebar on ≥992px, stacked on narrow screens).
+- `styles.scss` — layout (sidebar beside the content on ≥992px, stacked on narrow screens).
 - `theme-light.scss`, `theme-dark.scss` — the "academic navy" palettes (Bootstrap variables plus the `--brand/--accent/--warm/--soft/…` tokens). Change colours only here; `styles.scss` (layout, type, components) is shared and uses the tokens, so light and dark differ only in colour.
 - `index.qmd` (Publications, homepage), `software.qmd`; `content/` — catalogue entries.
 

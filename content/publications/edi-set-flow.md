@@ -14,4 +14,4 @@ related-software: [edi-set-flow]
 exclude: false
 ---
 
-A Nextflow pipeline for transcriptome-wide A-to-I RNA editing analysis of bulk RNA-seq data, with an accompanying R package for testing differential editing between groups. Applied to GTEx brain data, it reveals distinct editing signatures across brain tissues and recovers known protein-recoding events.
+Introduces Edi-Set-Flow, a Nextflow workflow for detecting and annotating adenosine-to-inosine (A-to-I) RNA editing from bulk RNA-seq, together with statistical methods for comparing editing between groups. Application to GTEx brain samples illustrates tissue-specific editing patterns and recovers known recoding sites.

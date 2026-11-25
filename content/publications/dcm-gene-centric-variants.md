@@ -13,4 +13,4 @@ tags: [Cardiovascular genetics, Clinical genomics, Variant prioritisation]
 exclude: false
 ---
 
-Compares strategies for interpreting rare variants from cardiomyopathy gene panel testing in 532 patients and 527 controls. Combining variant-level information with gene-level evidence of disease association greatly improves the identification of disease-causing variants.
+Evaluates rare-variant interpretation strategies using cardiomyopathy gene-panel data from 532 patients and 527 controls. Combining evidence about individual variants with the strength of gene–disease associations improves prioritisation of likely disease-causing variants in dilated cardiomyopathy.

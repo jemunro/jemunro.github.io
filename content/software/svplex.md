@@ -7,4 +7,4 @@ related-publications: [svplex]   # IDs in content/publications/
 exclude: false
 ---
 
-Cohort-level structural variant calling using an ensemble of six callers, with consensus filtering and read-depth validation.
+Nextflow workflow for scalable structural variant discovery in cohorts of short-read whole-genome sequences. Integrates six variant callers with consensus filtering and read-depth evidence to produce harmonised structural variant callsets.

@@ -16,4 +16,4 @@ related-software: [svplex]       # IDs in content/software/
 exclude: false
 ---
 
-SVPLEX is a scalable Nextflow pipeline for detecting structural variants in short-read whole-genome sequencing data. It combines six complementary callers to produce consensus structural variant callsets for cohort-level analysis.
+Introduces SVPLEX, a scalable Nextflow workflow for cohort-level structural variant detection from short-read whole-genome sequencing. By combining six complementary callers and applying consensus and read-depth filtering, it produces harmonised deletion and duplication callsets for downstream analysis.

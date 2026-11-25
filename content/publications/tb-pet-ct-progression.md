@@ -13,4 +13,4 @@ tags: [Tuberculosis, Infectious diseases, Medical imaging]
 exclude: false
 ---
 
-A prospective cohort of 250 asymptomatic contacts of patients with rifampicin-resistant tuberculosis in Cape Town, using baseline PET-CT to benchmark detection and 5-year progression. Participants with scans consistent with tuberculosis had a much higher risk of later diagnosis, and chest x-ray computer-aided detection performed comparatively well against PET-CT.
+Follows 250 asymptomatic adults at elevated risk of tuberculosis in Cape Town for approximately five years, using baseline PET–CT imaging to identify subclinical lung abnormalities. PET–CT findings strongly predicted subsequent tuberculosis diagnosis, while chest X-ray computer-aided detection showed promising performance against the imaging reference.

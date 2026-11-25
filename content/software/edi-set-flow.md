@@ -7,4 +7,4 @@ related-publications: [edi-set-flow]
 exclude: false
 ---
 
-Nextflow pipeline for detecting, annotating and analysing A-to-I RNA editing in bulk RNA-seq data. A companion R package, edisetr, fits per-site models across experimental groups and generates an interactive HTML report.
+Nextflow workflow for detecting and annotating A-to-I RNA editing sites in bulk RNA-seq data, including read processing, alignment, site identification and quality control. The companion `edisetr` R package supports differential editing analysis across groups and generates interactive reports.

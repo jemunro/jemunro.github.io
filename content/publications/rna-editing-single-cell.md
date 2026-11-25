@@ -13,4 +13,4 @@ tags: [Transcriptomics, RNA editing, Single-cell, Neurological disorders, Comput
 exclude: false
 ---
 
-Quantifies RNA editing sites in the nuclear transcriptomes of 3,055 neurons from six cortical regions, including thousands of putative novel sites. Editing differs between excitatory and inhibitory neurons, and sites differentially edited in schizophrenia and autism are placed in cell-type context.
+Profiles A-to-I RNA editing in single-nucleus transcriptomic data from 3,055 cortical neurons across six brain regions. Editing varies more strongly by neuronal subtype than by cortical region, and the analysis places editing changes associated with schizophrenia and autism in a cell-type-specific context.

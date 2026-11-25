@@ -22,6 +22,20 @@ local function str(v)
   if type(v) == "boolean" then return tostring(v) end
   return pandoc.utils.stringify(v)
 end
+-- Title as HTML, keeping only italics (*gene* / *species* names); all other markup is flattened.
+-- The plain-text title (e.title) is still used for search, sorting and data-title.
+local function inlines_html(v)
+  if pandoc.utils.type(v) ~= "Inlines" then return nil end
+  local function walk(inls)
+    local out = {}
+    for _, i in ipairs(inls) do
+      if i.t == "Emph" then out[#out + 1] = "<em>" .. walk(i.content) .. "</em>"
+      else out[#out + 1] = esc(pandoc.utils.stringify(i)) end
+    end
+    return table.concat(out)
+  end
+  return walk(v)
+end
 local function list(v)
   local out = {}
   if v == nil then return out end
@@ -62,7 +76,7 @@ local function load_entries(kind)
       local m = doc.meta
       local e = {
         file = "content/" .. kind .. "/" .. name,
-        id = str(m.id), title = str(m.title), date = str(m.date),
+        id = str(m.id), title = str(m.title), title_html = inlines_html(m.title), date = str(m.date),
         featured = flag(m.featured), exclude = flag(m.exclude),
         tags = list(m.tags), body = doc.blocks, meta = m,
       }
@@ -166,7 +180,7 @@ local function render_entry(prefix, e, title_url, meta_html, links, collapsible)
   for _, l in ipairs(links) do lk[#lk + 1] = '<a href="' .. esc(l.url) .. '">' .. esc(l.label) .. '</a>' end
   -- Collapsible (publication) cards: the title is plain text, because clicking it toggles the
   -- card; the link to the paper is the venue in the meta line instead.
-  local title_text = collapsible and esc(e.title) or ('<a href="' .. esc(title_url) .. '">' .. esc(e.title) .. '</a>')
+  local title_text = collapsible and (e.title_html or esc(e.title)) or ('<a href="' .. esc(title_url) .. '">' .. (e.title_html or esc(e.title)) .. '</a>')
   -- Featured entries have no badge: they sit at the top with a gold rule down the left side
   local title_html = '<div class="entry-title">' .. title_text .. '</div>'
   local meta_div = '<div class="entry-meta">' .. meta_html .. '</div>'

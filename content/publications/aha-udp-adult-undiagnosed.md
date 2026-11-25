@@ -13,4 +13,4 @@ tags: [Rare diseases, Clinical genomics, Whole-genome sequencing]
 exclude: false
 ---
 
-Describes the Austin Health Adult Undiagnosed Disease Program, which applied genome sequencing and research-grade analysis to 50 adult families without a prior diagnosis. 16 of 50 families (32%) were solved, and further candidate variants and novel gene discoveries were identified.
+Reports outcomes from Australia's first adult-focused undiagnosed disease programme, which applied genome sequencing and research-level analysis to 50 families with unresolved suspected genetic conditions. A diagnosis was established in 16 families (32%), demonstrating the value of advanced genomic investigation beyond paediatric rare disease services.

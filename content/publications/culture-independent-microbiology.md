@@ -13,4 +13,4 @@ tags: [Environmental microbiology]
 exclude: false
 ---
 
-A short article in Microbiology Australia on applying culture-independent methods to environmental and everyday samples.
+A short *Microbiology Australia* article exploring how culture-independent molecular approaches can reveal microbial communities in environmental and everyday samples, from wastewater to food and household surfaces.

@@ -13,4 +13,4 @@ tags: [Rare diseases, Epilepsy, Clinical genomics, Neurological disorders, Whole
 exclude: false
 ---
 
-Applies genome sequencing, with analysis extending beyond coding regions, to 242 people with developmental and epileptic encephalopathies who were negative on prior genetic testing. A molecular diagnosis was found for 36 (15%), including structural and non-coding variants that exome or gene panel testing cannot detect.
+Investigates genome sequencing in 242 individuals with developmental and epileptic encephalopathies who remained undiagnosed after prior genetic testing. Diagnoses were identified in 36 participants (15%), highlighting the contribution of structural and non-coding variation that may be missed by conventional testing.

@@ -1,6 +1,9 @@
 ---
-pagetitle: "Publications — {{< var name >}}"
+pagetitle: "{{< var name >}} — computational genomics researcher, {{< var affiliation_short >}}"
+description: "Publications by {{< var name >}}, computational genomics researcher at {{< var affiliation_short >}}: genome sequencing, epilepsy and rare disease genetics, and bioinformatics methods."
 ---
+
+{{< person-jsonld >}}
 
 {{< include _partials/header.qmd >}}
 

@@ -16,6 +16,13 @@ local function icon(cls)
   return pandoc.RawInline("html", '<i class="pl-icon ' .. cls .. '" aria-hidden="true"></i>')
 end
 
+-- Plain string value of a profile variable, or nil if absent/empty.
+local function var(key)
+  local v = quarto.variables.get(key)
+  local s = v and pandoc.utils.stringify(v) or ""
+  return s ~= "" and s or nil
+end
+
 return {
   ["profile-links"] = function()
     local items = {}
@@ -52,5 +59,37 @@ return {
     end
     if #tags == 0 then return pandoc.Null() end
     return pandoc.RawBlock("html", '<div class="focus-tags">' .. table.concat(tags, " ") .. '</div>')
+  end,
+
+  -- {{< person-jsonld >}}: schema.org Person structured data (JSON-LD) injected into the page head,
+  -- built only from _variables.yml (name, position, affiliation, bio, photo and the profile links),
+  -- so it cannot drift from what the page shows. Nothing is emitted without a site-url.
+  ["person-jsonld"] = function()
+    -- Shortcodes cannot see project metadata, so read site-url from _quarto.yml (single source of truth).
+    local site
+    local root = quarto.project.directory or "."
+    local fh = io.open(pandoc.path.join({ root, "_quarto.yml" }), "r")
+    if fh then
+      local m = pandoc.read("---\n" .. fh:read("a") .. "\n---\n", "markdown").meta
+      fh:close()
+      site = m.website and m.website["site-url"] and pandoc.utils.stringify(m.website["site-url"]) or nil
+    end
+    local name = var("name")
+    if not site or not name then return pandoc.Null() end
+    site = site:gsub("/+$", "")
+    local same = {}
+    for _, k in ipairs({ "github", "orcid", "scholar", "openalex", "wehi", "linkedin" }) do
+      same[#same + 1] = var(k)
+    end
+    local person = {
+      ["@context"] = "https://schema.org", ["@type"] = "Person",
+      name = name, url = site .. "/", description = var("bio"), jobTitle = var("position"),
+      image = var("photo") and (site .. "/" .. var("photo")) or nil,
+      worksFor = var("affiliation") and { ["@type"] = "Organization", name = var("affiliation") } or nil,
+      sameAs = #same > 0 and same or nil,
+    }
+    quarto.doc.include_text("in-header",
+      '<script type="application/ld+json">' .. pandoc.json.encode(person) .. "</script>")
+    return pandoc.Null()
   end
 }

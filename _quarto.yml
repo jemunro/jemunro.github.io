@@ -10,7 +10,18 @@ project:
 metadata-files:
   - _variables.yml
 
-website: {}
+website:
+  site-url: https://jemunro.github.io
+  image: images/profile.jpg   # default social preview image (the header photo)
+  image-alt: "Photo of Jacob E Munro"
+  open-graph:           # og:* tags for link previews
+    locale: en_AU
+    site-name: "Jacob E Munro"
+    image-width: 400
+    image-height: 400
+  twitter-card:
+    card-style: summary   # square photo: avoid the cropped "large image" card
+  # sitemap.xml is generated automatically because site-url is set
 
 format:
   html:
@@ -21,4 +32,5 @@ format:
     title-block-style: none
     toc: false
     lang: en
+    canonical-url: true   # <link rel="canonical"> on every page (uses website.site-url)
 

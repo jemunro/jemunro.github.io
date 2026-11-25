@@ -1,5 +1,6 @@
 ---
-pagetitle: "Software — {{< var name >}}"
+pagetitle: "Bioinformatics software — {{< var name >}}, {{< var affiliation_short >}}"
+description: "Bioinformatics software by {{< var name >}} ({{< var affiliation_short >}}): Nextflow pipelines and R packages for rare disease variant prioritisation, structural variants and amplicon sequencing."
 ---
 
 {{< include _partials/header.qmd >}}
